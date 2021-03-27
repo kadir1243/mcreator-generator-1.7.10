@@ -1,0 +1,11 @@
+_default: Object
+world: World
+int: int
+number: int
+entity: Entity
+itemstack: ItemStack
+map: HashMap
+string: String
+boolean: boolean
+direction: EnumFacing
+dimensiontype: int

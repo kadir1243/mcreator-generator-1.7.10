@@ -1,8 +1,9 @@
 {
   "id": "generator-1.7.10",
-  "minversion": 202100500000,
+  "minversion": 202000500000,
   "maxversion": 202200599999,
   "info": {
-    "name": "Minecraft Forge 1.7.10 generator"
+    "name": "Minecraft Forge 1.7.10 generator",
+    "authors": "Me"
   }
 }

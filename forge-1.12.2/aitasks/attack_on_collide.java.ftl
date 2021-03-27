@@ -1,1 +1,0 @@
-this.tasks.addTask(${customBlockIndex+1},new EntityAIAttackMelee(this, ${field$speed}, ${field$longmemory?lower_case}));

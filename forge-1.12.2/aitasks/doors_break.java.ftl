@@ -1,1 +1,0 @@
-this.tasks.addTask(${customBlockIndex+1},new EntityAIBreakDoor(this));

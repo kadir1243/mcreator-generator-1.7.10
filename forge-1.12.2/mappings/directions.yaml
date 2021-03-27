@@ -1,6 +1,0 @@
-DOWN: EnumFacing.DOWN
-UP: EnumFacing.UP
-NORTH: EnumFacing.NORTH
-SOUTH: EnumFacing.SOUTH
-WEST: EnumFacing.WEST
-EAST: EnumFacing.EAST

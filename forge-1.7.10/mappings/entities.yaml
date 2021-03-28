@@ -77,9 +77,7 @@ EntityStray: EntityStray
 EntityTameable: EntityTameable
 EntityThrowable: EntityThrowable
 EntityTNTPrimed: EntityTNTPrimed
-EntityVex: EntityVex
 EntityVillager: EntityVillager
-EntityVindicator: EntityVindicator
 EntityWaterMob: EntityWaterMob
 EntityWitch: EntityWitch
 EntityWither: EntityWither

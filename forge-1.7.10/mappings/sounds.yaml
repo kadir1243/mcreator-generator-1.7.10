@@ -35,7 +35,6 @@ entity.blaze.shoot: entity.blaze.shoot
 entity.bobber.splash: entity.bobber.splash
 entity.bobber.throw: entity.bobber.throw
 item.bottle.fill: item.bottle.fill
-item.bottle.fill_dragonbreath: item.bottle.fill_dragonbreath
 block.brewing_stand.brew: block.brewing_stand.brew
 item.bucket.empty: item.bucket.empty
 item.bucket.empty_lava: item.bucket.empty_lava
@@ -446,8 +445,6 @@ block.note.chime: block.note.chime
 block.note.flute: block.note.flute
 block.note.guitar: block.note.guitar
 block.note.xylophone: block.note.xylophone
-block.shulker_box.close: block.shulker_box.close
-block.shulker_box.open: block.shulker_box.open
 entity.boat.paddle_land: entity.boat.paddle_land
 entity.boat.paddle_water: entity.boat.paddle_water
 entity.bobber.retrieve: entity.bobber.retrieve
@@ -456,12 +453,7 @@ entity.endereye.death: entity.endereye.death
 entity.mule.chest: entity.mule.chest
 entity.player.hurt_drown: entity.player.hurt_drown
 entity.player.hurt_on_fire: entity.player.hurt_on_fire
-entity.vex.ambient: entity.vex.ambient
-entity.vex.charge: entity.vex.charge
-entity.vex.death: entity.vex.death
-entity.vex.hurt: entity.vex.hurt
 item.bottle.empty: item.bottle.empty
-item.totem.use: item.totem.use
 ui.toast.in: ui.toast.in
 ui.toast.out: ui.toast.out
 ui.toast.challenge_complete: ui.toast.challenge_complete

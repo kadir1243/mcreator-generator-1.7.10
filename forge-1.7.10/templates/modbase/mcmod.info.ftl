@@ -9,7 +9,7 @@
 <#else>
   "logoFile": "",
 </#if>
-  "mcversion": "1.12.2",
+  "mcversion": "1.7.10",
   "url": "${settings.getWebsiteURL()}",
   "updateUrl": "${settings.getUpdateURL()!""}",
 <#if settings.getAuthor()?has_content>

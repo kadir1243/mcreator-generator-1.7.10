@@ -10,7 +10,7 @@ package ${package};
 
 public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 
-	public final List<ModElement> elements = new ArrayList<>();
+	public final List<ModElement> elements = new ArrayList();
 
 	public final List<Supplier<Block>> blocks = new ArrayList<>();
 	public final List<Supplier<Item>> items = new ArrayList<>();

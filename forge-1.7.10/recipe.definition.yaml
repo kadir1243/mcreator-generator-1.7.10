@@ -3,8 +3,8 @@ templates:
     name: "@SRCROOT/@BASEPACKAGEPATH/item/crafting/Recipe@NAME.java"
     condition: "recipeType %= Smelting"
     deleteWhenConditionFalse: true
-  - template: json/recipe.json.ftl
+  - template: json/recipe.java.ftl
     writer: json
-    name: "@MODASSETSROOT/recipes/@registryname.json"
+    name: "@SRCROOT/@BASEPACKAGEPATH/recipes/@registryname.java"
     condition: "recipeType %= Crafting"
     deleteWhenConditionFalse: true

@@ -10,8 +10,7 @@ package ${package}.item.crafting;
 	}
 
 	@Override public void init(FMLInitializationEvent event) {
-		GameRegistry.addSmelting(${mappedMCItemToItemStackCode(data.smeltingInputStack, 1)},
-    		${mappedMCItemToItemStackCode(data.smeltingReturnStack, data.recipeRetstackSize)},${data.xpReward}F);
+		GameRegistry.addSmelting(${mappedMCItemToItemStackCode(data.smeltingInputStack, 1)},${mappedMCItemToItemStackCode(data.smeltingReturnStack, data.recipeRetstackSize)},${data.xpReward}F);
 	}
 
 }

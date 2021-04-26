@@ -12,16 +12,7 @@ templates:
     writer: json
     name: "@MODASSETSROOT/models/item/@registryname.json"
 
-  # Normal block templates
-  - template: json/block_states.json.ftl
-    condition: "renderType() #?= 10,11,12,2"
-    writer: json
-    variables: "variant=normal"
-    name: "@MODASSETSROOT/blockstates/@registryname.json"
-  - template: json/block_states_cmodel.json.ftl
-    condition: "renderType() #= 3"
-    writer: json
-    name: "@MODASSETSROOT/blockstates/@registryname.json"
+
   - template: json/block_all_fixed.json.ftl
     condition: "renderType() #= 10"
     writer: json

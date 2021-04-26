@@ -38,14 +38,6 @@ package ${package}.block;
 	}
 	</#if>
 
-	@SideOnly(Side.CLIENT) @Override public void registerModels(ModelRegistryEvent event) {
-		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation("${modid}:${registryname}","inventory"));
-
-		<#if data.blockBase?has_content && data.blockBase == "Leaves">
-		ModelLoader.setCustomStateMapper(block, (new StateMap.Builder()).ignore(BlockLeaves.DECAYABLE, BlockLeaves.CHECK_DECAY).build());
-		</#if>
-	}
-
 	<#if (data.spawnWorldTypes?size > 0)>
 	@Override public void generateWorld(Random random,int chunkX,int chunkZ,World world,int dimID,IChunkGenerator cg,IChunkProvider cp){
 		boolean dimensionCriteria=false;

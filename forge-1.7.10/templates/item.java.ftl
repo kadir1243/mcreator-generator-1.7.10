@@ -16,10 +16,6 @@ package ${package}.item;
 		elements.items.add(() -> new ItemCustom());
 	}
 
-	@SideOnly(Side.CLIENT) @Override public void registerModels(ModelRegistryEvent event) {
-		ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation("${modid}:${registryname}" ,"inventory"));
-	}
-
 	public static class ItemCustom extends Item {
 
 		public ItemCustom() {

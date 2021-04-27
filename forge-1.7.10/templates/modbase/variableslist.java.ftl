@@ -1,6 +1,8 @@
 <#-- @formatter:off -->
 package ${package};
 
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+
 public class ${JavaModName}Variables {
 
 	<#list variables as var>
@@ -170,10 +172,10 @@ public class ${JavaModName}Variables {
 		@Override public IMessage onMessage(WorldSavedDataSyncMessage message, MessageContext context) {
 			if (context.side == Side.SERVER)
 				context.getServerHandler().player.getServerWorld().addScheduledTask(()
-						-> syncData(message, context, context.getServerHandler().player.world));
+						-> syncData(message, context, context.getServerHandler().playerEntity.worldObj));
 			else
 				Minecraft.getMinecraft().addScheduledTask(()
-						-> syncData(message, context, Minecraft.getMinecraft().player.world));
+						-> syncData(message, context, Minecraft.getMinecraft().thePlayer.worldObj));
 
 			return null;
 		}
@@ -184,7 +186,7 @@ public class ${JavaModName}Variables {
 				if (message.type == 0)
 					${JavaModName}.PACKET_HANDLER.sendToAll(message);
 				else
-					${JavaModName}.PACKET_HANDLER.sendToDimension(message, world.provider.getDimension());
+					${JavaModName}.PACKET_HANDLER.sendToDimension(message, Integer.parseInt(world.provider.getDimensionName());
 			}
 
 			if (message.type == 0) {

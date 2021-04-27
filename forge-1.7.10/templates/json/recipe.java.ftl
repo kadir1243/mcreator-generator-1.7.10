@@ -10,8 +10,7 @@ package ${package}.item.crafting;
     </#list>
       ${ingredients[0..(ingredients?last_index_of(',') - 1)]}
 			GameRegistry.addShapelessRecipe(new ItemStack(Items.${mappedMCItemToIngameItemName(data.recipeReturnStack)}), Items.iron_ingot, Items.flint);
-  </#if>
-<#else>
+  <#else>
   "type": "minecraft:crafting_shaped",
     <#assign recipeArray = data.getOptimisedRecipe()>
     <#assign rm = [], i = 0>
@@ -25,9 +24,9 @@ package ${package}.item.crafting;
         ${recipeMapping}<#if recipeMapping?has_next>,</#if>
     </#list>
     },
-</#if>
-  "result": {
-      ${mappedMCItemToIngameItemName(data.recipeReturnStack)},
-  "count": ${data.recipeRetstackSize}}
+  </#if>
+    "result": {
+        ${mappedMCItemToIngameItemName(data.recipeReturnStack)},
+    "count": ${data.recipeRetstackSize}}
   }
 }

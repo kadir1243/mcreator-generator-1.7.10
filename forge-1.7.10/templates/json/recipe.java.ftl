@@ -1,17 +1,16 @@
 <#include "../mcitems.ftl">
-{
-  "group": "<#if data.group?has_content>${data.group}<#else>${modid}</#if>",
-<#if data.recipeShapeless>
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    <#assign ingredients = "">
+package ${package}.item.crafting;
+@Elements${JavaModName}.ModElement.Tag public class Recipe${name} extends Elements${JavaModName}.ModElement{
+  @Override public void init(FMLInitializationEvent event) {
+  <#if data.recipeShapeless>
     <#list data.recipeSlots as element>
         <#if !element.isEmpty()>
             <#assign ingredients += "{${mappedMCItemToIngameItemName(element)}},">
         </#if>
     </#list>
       ${ingredients[0..(ingredients?last_index_of(',') - 1)]}
-  ],
+			GameRegistry.addShapelessRecipe(new ItemStack(Items.${mappedMCItemToIngameItemName(data.recipeReturnStack)}), Items.iron_ingot, Items.flint);
+  </#if>
 <#else>
   "type": "minecraft:crafting_shaped",
     <#assign recipeArray = data.getOptimisedRecipe()>
@@ -29,6 +28,6 @@
 </#if>
   "result": {
       ${mappedMCItemToIngameItemName(data.recipeReturnStack)},
-  "count": ${data.recipeRetstackSize}
-}
+  "count": ${data.recipeRetstackSize}}
+  }
 }

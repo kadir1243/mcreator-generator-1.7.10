@@ -18,7 +18,7 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 	public final List<Supplier<EntityEntry>> entities = new ArrayList();
 	public final List<Supplier<Potion>> potions = new ArrayList();
 
-	public static Map<ResourceLocation, net.minecraft.util.SoundEvent> sounds = new HashMap<>();
+	public static Map<ResourceLocation, net.minecraft.util.SoundEvent> sounds = new HashMap();
 
 	public Elements${JavaModName}() {
 		<#list sounds as sound>
@@ -61,10 +61,10 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 		return 0;
 	}
 
-	@SubscribeEvent public void onPlayerLoggedIn(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
-		if (!event.player.world.isRemote) {
-			WorldSavedData mapdata = ${JavaModName}Variables.MapVariables.get(event.player.world);
-			WorldSavedData worlddata = ${JavaModName}Variables.WorldVariables.get(event.player.world);
+	@SubscribeEvent public void onPlayerLoggedIn(cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent event) {
+		if (!event.player.worldObj.isRemote) {
+			WorldSavedData mapdata = ${JavaModName}Variables.MapVariables.get(event.player.worldObj);
+			WorldSavedData worlddata = ${JavaModName}Variables.WorldVariables.get(event.player.worldObj);
 			if(mapdata != null)
 				${JavaModName}.PACKET_HANDLER.sendTo(new ${JavaModName}Variables.WorldSavedDataSyncMessage(0, mapdata), (EntityPlayerMP) event.player);
 			if(worlddata != null)
@@ -72,9 +72,9 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 		}
     }
 
-    @SubscribeEvent public void onPlayerChangedDimension(net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event) {
-		if (!event.player.world.isRemote) {
-			WorldSavedData worlddata = ${JavaModName}Variables.WorldVariables.get(event.player.world);
+    @SubscribeEvent public void onPlayerChangedDimension(cpw.mods.fml.common.gameevent.PlayerEvent.PlayerChangedDimensionEvent event) {
+		if (!event.player.worldObj.isRemote) {
+			WorldSavedData worlddata = ${JavaModName}Variables.WorldVariables.get(event.player.worldObj);
 			if(worlddata != null)
 				${JavaModName}.PACKET_HANDLER.sendTo(new ${JavaModName}Variables.WorldSavedDataSyncMessage(1, worlddata), (EntityPlayerMP) event.player);
 		}

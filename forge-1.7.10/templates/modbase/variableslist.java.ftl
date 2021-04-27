@@ -150,7 +150,7 @@ public class ${JavaModName}Variables {
 			if (world.isRemote) {
 				${JavaModName}.PACKET_HANDLER.sendToServer(new WorldSavedDataSyncMessage(1, this));
 			} else {
-				${JavaModName}.PACKET_HANDLER.sendToDimension(new WorldSavedDataSyncMessage(1, this), world.provider.getDimension());
+				${JavaModName}.PACKET_HANDLER.sendToDimension(new WorldSavedDataSyncMessage(1, this), Integer.parseInt(world.provider.getDimensionName());
 			}
 		}
 

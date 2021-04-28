@@ -81,7 +81,7 @@ public class ${JavaModName}Variables {
 		}
 
 		public static MapVariables get(World world) {
-			MapVariables instance = (MapVariables) world.getMapStorage().getOrLoadData(MapVariables.class, DATA_NAME);
+			MapVariables instance = (MapVariables) world.getMapStorage().loadData(MapVariables.class, DATA_NAME);
 			if (instance == null) {
 				instance = new MapVariables();
 				world.getMapStorage().setData(DATA_NAME, instance);
@@ -155,11 +155,10 @@ public class ${JavaModName}Variables {
 		}
 
 		public static WorldVariables get(World world) {
-			WorldVariables instance = (WorldVariables) world.getPerWorldStorage()
-					.getOrLoadData(WorldVariables.class, DATA_NAME);
+			WorldVariables instance = (WorldVariables) world.getPerWorldStorage().loadData(WorldVariables.class, DATA_NAME);
 			if (instance == null) {
 				instance = new WorldVariables();
-				world.getPerWorldStorage().setData(DATA_NAME, instance);
+				world.mapStorage.setData(DATA_NAME, instance);
 			}
 			return instance;
 		}
@@ -171,7 +170,7 @@ public class ${JavaModName}Variables {
 
 		@Override public IMessage onMessage(WorldSavedDataSyncMessage message, MessageContext context) {
 			if (context.side == Side.SERVER)
-				context.getServerHandler().player.getServerWorld().addScheduledTask(()
+				context.getServerHandler().playerEntity.getServerForPlayer().addScheduledTask(()
 						-> syncData(message, context, context.getServerHandler().playerEntity.worldObj));
 			else
 				Minecraft.getMinecraft().addScheduledTask(()
@@ -190,9 +189,9 @@ public class ${JavaModName}Variables {
 			}
 
 			if (message.type == 0) {
-				world.getMapStorage().setData(MapVariables.DATA_NAME, message.data);
+				world.mapStorage.setData(MapVariables.DATA_NAME, message.data);
 			} else {
-				world.getPerWorldStorage().setData(WorldVariables.DATA_NAME, message.data);
+				world.perWorldStorage.setData(WorldVariables.DATA_NAME, message.data);
 			}
 		}
 	}

@@ -155,7 +155,7 @@ public class ${JavaModName}Variables {
 		}
 
 		public static WorldVariables get(World world) {
-			WorldVariables instance = (WorldVariables) world.getPerWorldStorage().loadData(WorldVariables.class, DATA_NAME);
+			WorldVariables instance = (WorldVariables) world.perWorldStorage.loadData(WorldVariables.class, DATA_NAME);
 			if (instance == null) {
 				instance = new WorldVariables();
 				world.mapStorage.setData(DATA_NAME, instance);

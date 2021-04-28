@@ -1,3 +1,4 @@
+<#-- @formatter:off -->
 <#include "../mcitems.ftl">
 package ${package}.item.crafting;
 @Elements${JavaModName}.ModElement.Tag public class Recipe${name} extends Elements${JavaModName}.ModElement{
@@ -30,3 +31,4 @@ package ${package}.item.crafting;
     "count": ${data.recipeRetstackSize}}
   }
 }
+<#-- @formatter:on -->

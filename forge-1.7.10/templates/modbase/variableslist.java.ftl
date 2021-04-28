@@ -81,10 +81,10 @@ public class ${JavaModName}Variables {
 		}
 
 		public static MapVariables get(World world) {
-			MapVariables instance = (MapVariables) world.getMapStorage().loadData(MapVariables.class, DATA_NAME);
+			MapVariables instance = (MapVariables) world.mapStorage.loadData(MapVariables.class, DATA_NAME);
 			if (instance == null) {
 				instance = new MapVariables();
-				world.getMapStorage().setData(DATA_NAME, instance);
+				world.mapStorage.setData(DATA_NAME, instance);
 			}
 			return instance;
 		}

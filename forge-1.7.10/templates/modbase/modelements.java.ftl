@@ -14,7 +14,7 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 
 	public final List<Supplier<Block>> blocks = new ArrayList();
 	public final List<Supplier<Item>> items = new ArrayList();
-	public final List<Supplier<Biome>> biomes = new ArrayList();
+	public final List<Supplier<BiomeGenBase>> biomes = new ArrayList();
 	public final List<Supplier<EntityEntry>> entities = new ArrayList();
 	public final List<Supplier<Potion>> potions = new ArrayList();
 
@@ -118,7 +118,7 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 		return items;
 	}
 
-	public List<Supplier<Biome>> getBiomes() {
+	public List<Supplier<BiomeGenBase>> getBiomes() {
 		return biomes;
 	}
 

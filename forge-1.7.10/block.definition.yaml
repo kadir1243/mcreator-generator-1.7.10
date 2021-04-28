@@ -17,16 +17,6 @@ templates:
     condition: "renderType() #= 10"
     writer: json
     name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block.json.ftl
-    condition: "renderType() #= 11"
-    writer: json
-    variables: "model=cube_all;txname=all"
-    name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block.json.ftl
-    condition: "renderType() #= 12"
-    writer: json
-    variables: "model=cross;txname=cross"
-    name: "@MODASSETSROOT/models/block/@registryname.json"
   - template: json/block_cmodel.json.ftl
     condition: "renderType() #= 2"
     writer: json
@@ -100,18 +90,6 @@ templates:
     writer: json
     variables: "model=wall_side;txname=wall"
     name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= Wall"
-    writer: json
-    variables: "model=wall_post;txname=wall"
-    name: "@MODASSETSROOT/models/block/@registryname_post.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= Wall"
-    writer: json
-    variables: "model=wall_inventory;txname=wall"
-    name: "@MODASSETSROOT/models/block/@registryname_inventory.json"
 
   # TX: Slab templates
   - template: json/block_item.json.ftl

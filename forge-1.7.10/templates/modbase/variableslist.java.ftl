@@ -150,7 +150,7 @@ public class ${JavaModName}Variables {
 			if (world.isRemote) {
 				${JavaModName}.PACKET_HANDLER.sendToServer(new WorldSavedDataSyncMessage(1, this));
 			} else {
-				${JavaModName}.PACKET_HANDLER.sendToDimension(new WorldSavedDataSyncMessage(1, this), Integer.parseInt(world.provider.getDimensionName());
+				${JavaModName}.PACKET_HANDLER.sendToDimension(new WorldSavedDataSyncMessage(1, this), Integer.parseInt(world.provider.getDimensionName()));
 			}
 		}
 
@@ -186,7 +186,7 @@ public class ${JavaModName}Variables {
 				if (message.type == 0)
 					${JavaModName}.PACKET_HANDLER.sendToAll(message);
 				else
-					${JavaModName}.PACKET_HANDLER.sendToDimension(message, Integer.parseInt(world.provider.getDimensionName());
+					${JavaModName}.PACKET_HANDLER.sendToDimension(message, Integer.parseInt(world.provider.getDimensionName()));
 			}
 
 			if (message.type == 0) {

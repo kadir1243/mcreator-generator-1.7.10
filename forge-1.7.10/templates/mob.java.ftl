@@ -28,15 +28,15 @@ package ${package}.entity;
 	<#if data.spawnThisMob>
 	@Override public void init(FMLInitializationEvent event) {
 		<#if data.restrictionBiomes?has_content>
-			Biome[] spawnBiomes = {
+			BiomeGenBase[] spawnBiomes = {
 				<#list data.restrictionBiomes as restrictionBiome>
 					<#if restrictionBiome.canProperlyMap()>
-					Biome.REGISTRY.getObject(new ResourceLocation("${restrictionBiome}")),
+					BiomeGenBase.REGISTRY.getObject(new ResourceLocation("${restrictionBiome}")),
 					</#if>
 				</#list>
 			};
 		<#else>
-			Biome[] spawnBiomes = allbiomes(Biome.REGISTRY);
+			BiomeGenBase[] spawnBiomes = allbiomes(BiomeGenBase.REGISTRY);
 		</#if>
 		EntityRegistry.addSpawn(EntityCustom.class, ${data.spawningProbability}, ${data.minNumberOfMobsPerGroup}, ${data.maxNumberOfMobsPerGroup},
 			${generator.map(data.mobSpawningType, "mobspawntypes")}, spawnBiomes);
@@ -48,12 +48,12 @@ package ${package}.entity;
 	</#if>
 
 	<#if !data.restrictionBiomes?has_content>
-	private Biome[] allbiomes(net.minecraft.util.registry.RegistryNamespaced<ResourceLocation, Biome> in) {
-		Iterator<Biome> itr = in.iterator();
-		ArrayList<Biome> ls = new ArrayList<Biome>();
+	private BiomeGenBase[] allbiomes(net.minecraft.util.registry.RegistryNamespaced<ResourceLocation, BiomeGenBase> in) {
+		Iterator<BiomeGenBase> itr = in.iterator();
+		ArrayList<BiomeGenBase> ls = new ArrayList<BiomeGenBase>();
 		while(itr.hasNext())
 			ls.add(itr.next());
-		return ls.toArray(new Biome[ls.size()]);
+		return ls.toArray(new BiomeGenBase[ls.size()]);
 	}
 	</#if>
 
@@ -61,7 +61,7 @@ package ${package}.entity;
 		<#if data.mobModelName == "Chicken">
 			RenderingRegistry.registerEntityRenderingHandler(EntityCustom.class, renderManager -> {
 				return new RenderLiving(renderManager, new ModelChicken(), ${data.modelShadowSize}f) {
-						protected ResourceLocation getEntityTexture(Entity entity) {
+						protected void setEntityTexture()   {
 							return new ResourceLocation("${modid}:textures/${data.mobModelTexture}");
 						}
 					};
@@ -167,7 +167,7 @@ package ${package}.entity;
 		    	<#if !data.rangedAttackItem.isEmpty()>
 		    		return ${mappedMCItemToItemStackCode(data.rangedAttackItem, 1)};
 		    	<#else>
-		    		return new ItemStack(Items.ARROW);
+		    		return new ItemStack(Items.arrow);
 		    	</#if>
 				}
 			};
@@ -226,8 +226,8 @@ package ${package}.entity;
             </#if>
 
 			<#if data.flyingMob>
-			this.navigator = new PathNavigateFlying(this, this.world);
-			this.moveHelper = new EntityFlyHelper(this);
+			this.getNavigator() = new PathNavigateFlying(this, this.worldObj);
+			this.getMoveHelper() = new EntityFlyHelper(this);
 			</#if>
 		}
 
@@ -335,15 +335,15 @@ package ${package}.entity;
 					return false;
 			</#if>
 			<#if data.immuneToFallDamage>
-				if (source == DamageSource.FALL)
+				if (source == DamageSource.fall)
 					return false;
 			</#if>
 			<#if data.immuneToCactus>
-				if (source == DamageSource.CACTUS)
+				if (source == DamageSource.cactus)
 					return false;
 			</#if>
 			<#if data.immuneToDrowning>
-				if (source == DamageSource.DROWN)
+				if (source == DamageSource.drownF)
 					return false;
 			</#if>
 			<#if data.immuneToLightning>
@@ -428,12 +428,12 @@ package ${package}.entity;
 
 			if (this.getEntityAttribute(SharedMonsterAttributes.ARMOR) != null)
 				this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(${data.armorBaseValue}D);
-			if (this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED) != null)
-				this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(${data.movementSpeed}D);
-			if (this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH) != null)
-				this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(${data.health}D);
-			if (this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE) != null)
-				this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(${data.attackStrength}D);
+			if (this.getEntityAttribute(SharedMonsterAttributes.movementSpeed) != null)
+				this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(${data.movementSpeed}D);
+			if (this.getEntityAttribute(SharedMonsterAttributes.maxHealth) != null)
+				this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(${data.health}D);
+			if (this.getEntityAttribute(SharedMonsterAttributes.attackDamage) != null)
+				this.getEntityAttribute(SharedMonsterAttributes.attackDamage).setBaseValue(${data.attackStrength}D);
 
 			<#if data.flyingMob>
 			this.getAttributeMap().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
@@ -494,7 +494,7 @@ package ${package}.entity;
     	}
 
     	@Override public boolean isNotColliding() {
-        	return this.world.checkNoEntityCollision(this.getEntityBoundingBox(), this);
+        	return this.worldObj.checkNoEntityCollision(this.getBoundingBox(), this);
     	}
 
     	@Override public boolean isPushedByWater() {
@@ -557,7 +557,7 @@ package ${package}.entity;
 					this.stepHeight = 1.0F;
 
 					if (entity instanceof EntityLivingBase) {
-						this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue());
+						this.setAIMoveSpeed((float) this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue());
 
 						<#if data.canControlForward>
 							float forward = ((EntityLivingBase) entity).moveForward;

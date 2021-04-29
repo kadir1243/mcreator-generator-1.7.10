@@ -1,6 +1,6 @@
 templates:
-  - template: json/achievement.json.ftl
-    writer: json
+  - template: json/achievement.java.ftl
+    writer: java
     name: "@MODASSETSROOT/advancements/@registryname.json"
 
 localizationkeys:

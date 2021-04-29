@@ -1,1 +1,1 @@
-(${input$entity}).world.removeEntity(${input$entity});
+(${input$entity}).worldObj.removeEntity(${input$entity});

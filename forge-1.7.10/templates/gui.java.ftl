@@ -75,7 +75,7 @@ package ${package}.gui;
 						<#if hasProcedure(component.onStackTransfer)>
                         @Override public void onSlotChange(ItemStack a, ItemStack b) {
 							super.onSlotChange(a, b);
-							GuiContainerMod.this.slotChanged(${component.id}, 2, b.getCount() - a.getCount());
+							GuiContainerMod.this.slotChanged(${component.id}, 2, b.stackSize - a.stackSize);
 						}
 						</#if>
 
@@ -124,7 +124,7 @@ package ${package}.gui;
 		}
 
 		@Override public boolean canInteractWith(EntityPlayer player) {
-			return internal.isUsableByPlayer(player);
+			return internal.isUseableByPlayer(player);
 		}
 
 		<#if data.type == 1>
@@ -154,17 +154,17 @@ package ${package}.gui;
 					return ItemStack.EMPTY;
 				}
 
-				if (itemstack1.getCount() == 0) {
+				if (itemstack1.stackSize == 0) {
 					slot.putStack(ItemStack.EMPTY);
 				} else {
 					slot.onSlotChanged();
 				}
 
-				if (itemstack1.getCount() == itemstack.getCount()) {
+				if (itemstack1.stackSize == itemstack.stackSize) {
 					return ItemStack.EMPTY;
 				}
 
-				slot.onTake(playerIn, itemstack1);
+				slot.onPickupFromSlot(playerIn, itemstack1);
 			}
 			return itemstack;
 		}
@@ -177,7 +177,7 @@ package ${package}.gui;
 		@Override public void onContainerClosed(EntityPlayer playerIn) {
 			super.onContainerClosed(playerIn);
 			if ((internal instanceof InventoryBasic) && (playerIn instanceof EntityPlayerMP)) {
-				this.clearContainer(playerIn, playerIn.world, internal);
+				this.clearContainer(playerIn, playerIn.worldObj, internal);
 			}
 		}
 
@@ -336,8 +336,8 @@ package ${package}.gui;
 	public static class GUIButtonPressedMessageHandler implements IMessageHandler<GUIButtonPressedMessage, IMessage> {
 
 		@Override public IMessage onMessage(GUIButtonPressedMessage message, MessageContext context) {
-	    	EntityPlayerMP entity = context.getServerHandler().player;
-	    	entity.getServerWorld().addScheduledTask(() -> {
+	    	EntityPlayerMP entity = context.getServerHandler().playerEntity;
+	    	entity.getServerForPlayer().addScheduledTask(() -> {
 	    		int buttonID = message.buttonID;
 	    		int x = message.x;
 	    		int y = message.y;
@@ -352,7 +352,7 @@ package ${package}.gui;
 	public static class GUISlotChangedMessageHandler implements IMessageHandler<GUISlotChangedMessage, IMessage> {
 
 		@Override public IMessage onMessage(GUISlotChangedMessage message, MessageContext context) {
-	    	EntityPlayerMP entity = context.getServerHandler().player;
+	    	EntityPlayerMP entity = context.getServerHandler().playerEntity;
 	    	entity.getServerWorld().addScheduledTask(() -> {
 	    		int slotID = message.slotID;
 	    		int changeType = message.changeType;
@@ -434,7 +434,7 @@ package ${package}.gui;
 	}
 
 	private static void handleButtonAction(EntityPlayer entity, int buttonID, int x, int y, int z) {
-		World world = entity.world;
+		World world = entity.worldObj;
 
 		// security measure to prevent arbitrary chunk generation
 		if (!world.isBlockLoaded(new BlockPos(x, y, z)))
@@ -454,7 +454,7 @@ package ${package}.gui;
 	}
 
 	private static void handleSlotAction(EntityPlayer entity, int slotID, int changeType, int meta, int x, int y, int z) {
-		World world = entity.world;
+		World world = entity.worldObj;
 
 		// security measure to prevent arbitrary chunk generation
 		if (!world.isBlockLoaded(new BlockPos(x, y, z)))

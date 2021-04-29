@@ -43,9 +43,6 @@ package ${package}.potion;
 
 		public PotionCustom() {
 			super(${data.isBad}, ${data.color.getRGB()});
-			<#if data.isBenefitical>
-			setBeneficial();
-			</#if>
 			setRegistryName("${registryname}");
 			setPotionName("effect.${registryname}");
 			potionIcon = new ResourceLocation("${modid}:textures/mob_effect/${registryname}.png");

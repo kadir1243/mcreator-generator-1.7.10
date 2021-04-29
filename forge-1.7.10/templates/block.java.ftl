@@ -132,8 +132,8 @@ package ${package}.block;
 			super(Material.${data.material});
 			</#if>
 
-			setUnlocalizedName("${registryname}");
-			setSoundType(SoundType.${data.soundOnStep});
+			this.setBlockName("${registryname}");
+			setSoundType(${data.soundOnStep});
 
 			<#if data.destroyTool != "Not specified">
 			setHarvestLevel("${data.destroyTool}", ${data.breakHarvestLevel});

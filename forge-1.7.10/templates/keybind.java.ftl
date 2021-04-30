@@ -27,7 +27,7 @@ package ${package}.keybind;
 			if (Minecraft.getMinecraft().currentScreen == null) {
 				if (org.lwjgl.input.Keyboard.isKeyDown(keys.getKeyCode())) {
 					${JavaModName}.PACKET_HANDLER.sendToServer(new KeyBindingPressedMessage());
-					pressAction(Minecraft.getMinecraft().player);
+					pressAction(Minecraft.getMinecraft().thePlayer);
 				}
 			}
     	</#if>
@@ -36,8 +36,8 @@ package ${package}.keybind;
 	public static class KeyBindingPressedMessageHandler implements IMessageHandler<KeyBindingPressedMessage, IMessage> {
 
 		@Override public IMessage onMessage(KeyBindingPressedMessage message, MessageContext context) {
-	    	EntityPlayerMP entity = context.getServerHandler().player;
-	    	entity.getServerWorld().addScheduledTask(() -> {
+	    	EntityPlayerMP entity = context.getServerHandler().playeplayerEntityr;
+	    	entity.getServerForPlayer().addScheduledTask(() -> {
 	    		<#if hasProcedure(data.onKeyPressed)>
 				pressAction(entity);
 				</#if>
@@ -58,13 +58,13 @@ package ${package}.keybind;
 
 	<#if hasProcedure(data.onKeyPressed)>
 	private static void pressAction(EntityPlayer entity) {
-		World world = entity.world;
+		World world = entity.worldObj;
 		int x = (int) entity.posX;
 		int y = (int) entity.posY;
 		int z = (int) entity.posZ;
 
 		// security measure to prevent arbitrary chunk generation
-		if (!world.isBlockLoaded(new BlockPos(x, y, z)))
+		if (!world.blockExists(entity.serverPosX, entity.serverPosY, entity.serverPosZ))
 			return;
 
 		<@procedureOBJToCode data.onKeyPressed/>

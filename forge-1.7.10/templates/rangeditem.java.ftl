@@ -65,7 +65,7 @@ package ${package}.item;
 				</#if>
 				float power = ${data.bulletPower}f;
 				EntityArrowCustom entityarrow = new EntityArrowCustom(world, entity);
-				entityarrow.shoot(entity.getLookVec().x, entity.getLookVec().y, entity.getLookVec().z, power * 2, 0);
+				entityarrow.shoot(entity.getLookVec().xCoord, entity.getLookVec().yCoord, entity.getLookVec().zCoord, power * 2, 0);
 				entityarrow.setSilent(true);
 				entityarrow.setIsCritical(${data.bulletParticles});
 				entityarrow.setDamage(${data.bulletDamage});
@@ -103,7 +103,7 @@ package ${package}.item;
 				</#if>
 
 				if (!world.isRemote)
-					world.spawnEntity(entityarrow);
+					world.spawnEntityInWorld(entityarrow);
 
 				<@procedureOBJToCode data.onRangedItemUsed/>
 
@@ -118,7 +118,7 @@ package ${package}.item;
 			@Override public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot slot) {
 				Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(slot);
 				if (slot == EntityEquipmentSlot.MAINHAND) {
-					multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Ranged item modifier", (double) ${data.damageVsEntity - 4}, 0));
+					multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Ranged item modifier", (double) ${data.damageVsEntity - 4}, 0));
 					multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Ranged item modifier", -2.4, 0));
 				}
 				return multimap;
@@ -145,13 +145,13 @@ package ${package}.item;
 			}
         </#if>
 
-		@Override public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer entity, EnumHand hand) {
+		@Override public ItemStack onItemRightClick(World world, EntityPlayer entity, ItemStack itemStack) {
 			entity.setActiveHand(hand);
 			return new ActionResult(EnumActionResult.SUCCESS, entity.getHeldItem(hand));
 		}
 
 		@Override public EnumAction getItemUseAction(ItemStack itemstack) {
-			return EnumAction.BOW;
+			return EnumAction.bow;
 		}
 
 		@Override public int getMaxItemUseDuration(ItemStack itemstack) {
@@ -166,7 +166,7 @@ package ${package}.item;
 
 	}
 
-	public static class EntityArrowCustom extends EntityTippedArrow {
+	public static class EntityArrowCustom extends EntityArrow {
 
 		public EntityArrowCustom(World a) {
 			super(a);
@@ -186,7 +186,7 @@ package ${package}.item;
 			int x = (int) this.posX;
 			int y = (int) this.posY;
 			int z = (int) this.posZ;
-			World world = this.world;
+			World world = this.worldObj;
 			<@procedureOBJToCode data.onBulletHitsPlayer/>
 		}
         </#if>
@@ -198,7 +198,7 @@ package ${package}.item;
 				int x = (int) this.posX;
 				int y = (int) this.posY;
 				int z = (int) this.posZ;
-				World world = this.world;
+				World world = this.worldObj;
 				<@procedureOBJToCode data.onBulletHitsEntity/>
 			</#if>
 		}
@@ -208,12 +208,12 @@ package ${package}.item;
 			int x = (int) this.posX;
 			int y = (int) this.posY;
 			int z = (int) this.posZ;
-			World world = this.world;
+			World world = this.worldObj;
 			Entity entity = (Entity) shootingEntity;
 			<@procedureOBJToCode data.onBulletFlyingTick/>
-			if (this.inGround) {
+			if (this.onGround) {
 			    <@procedureOBJToCode data.onBulletHitsBlock/>
-				this.world.removeEntity(this);
+				this.worldObj.removeEntity(this);
 			}
 		}
 

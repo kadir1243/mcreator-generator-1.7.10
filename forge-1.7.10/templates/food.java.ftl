@@ -44,7 +44,7 @@ package ${package}.item;
         </#if>
 
 		@Override public EnumAction getItemUseAction(ItemStack par1ItemStack) {
-			return EnumAction.${data.animation?upper_case};
+			return EnumAction.${data.animation};
 		}
 
 		<#if hasProcedure(data.onRightClicked)>

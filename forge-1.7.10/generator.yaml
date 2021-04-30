@@ -45,9 +45,6 @@ base_templates:
   - template: modbase/sounds.json.ftl
     writer: json
     name: "@MODASSETSROOT/sounds.json"
-  - template: modbase/pack.mcmeta.ftl
-    writer: json
-    name: "@RESROOT/pack.mcmeta"
   - template: modbase/mcmod.info.ftl
     writer: json
     name: "@RESROOT/mcmod.info"

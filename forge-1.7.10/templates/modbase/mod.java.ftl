@@ -84,7 +84,8 @@ package ${package};
 		event.getRegistry().registerAll(elements.getPotions().stream().map(Supplier::get).toArray(Potion[]::new));
 	}
 
-	@SubscribeEvent public void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
+	@SubscribeEvent
+	public void registerSounds(SoundRegistry event) {
 		elements.registerSounds(event);
 	}
 

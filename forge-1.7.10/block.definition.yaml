@@ -2,26 +2,6 @@ templates:
   - template: block.java.ftl
     name: "@SRCROOT/@BASEPACKAGEPATH/block/Block@NAME.java"
 
-  # Block item templates
-  - template: json/block_item.json.ftl
-    condition: "renderType() #?= 10,11,12,2"
-    writer: json
-    name: "@MODASSETSROOT/models/item/@registryname.json"
-  - template: json/block_item_cmodel.json.ftl
-    condition: "renderType() #= 3"
-    writer: json
-    name: "@MODASSETSROOT/models/item/@registryname.json"
-
-
-  - template: json/block_all_fixed.json.ftl
-    condition: "renderType() #= 10"
-    writer: json
-    name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block_cmodel.json.ftl
-    condition: "renderType() #= 2"
-    writer: json
-    name: "@MODASSETSROOT/models/block/@registryname.json"
-
   # TX: Stairs templates
   - template: json/block_item.json.ftl
     condition: "blockBase %= Stairs"
@@ -58,24 +38,7 @@ templates:
     condition: "blockBase %= Fence"
     writer: json
     name: "@MODASSETSROOT/blockstates/@registryname.json"
-  - template: json/block.json.ftl
-    condition: "blockBase %= Fence"
-    writer: json
-    variables: "model=fence_side;txname=texture"
-    name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= Fence"
-    writer: json
-    variables: "model=fence_post;txname=texture"
-    name: "@MODASSETSROOT/models/block/@registryname_post.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= Fence"
-    writer: json
-    variables: "model=fence_inventory;txname=texture"
-    name: "@MODASSETSROOT/models/block/@registryname_inventory.json"
-
+    
   # TX: Wall templates
   - template: json/txblock/fence_block_item.json.ftl
     condition: "blockBase %= Wall"
@@ -85,13 +48,8 @@ templates:
     condition: "blockBase %= Wall"
     writer: json
     name: "@MODASSETSROOT/blockstates/@registryname.json"
-  - template: json/block.json.ftl
-    condition: "blockBase %= Wall"
-    writer: json
-    variables: "model=wall_side;txname=wall"
-    name: "@MODASSETSROOT/models/block/@registryname.json"
 
-  # TX: Slab templates
+# TX: Slab templates
   - template: json/block_item.json.ftl
     condition: "blockBase %= Slab"
     writer: json
@@ -116,12 +74,6 @@ templates:
     condition: "blockBase %= Slab"
     writer: json
     name: "@MODASSETSROOT/blockstates/@registryname_double.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= Slab"
-    writer: json
-    variables: "model=cube_all;txname=all"
-    name: "@MODASSETSROOT/models/block/@registryname_double.json"
 
   # TX: TrapDoor templates
   - template: json/block_item.json.ftl
@@ -132,23 +84,6 @@ templates:
     condition: "blockBase %= TrapDoor"
     writer: json
     name: "@MODASSETSROOT/blockstates/@registryname.json"
-  - template: json/block.json.ftl
-    condition: "blockBase %= TrapDoor"
-    writer: json
-    variables: "model=trapdoor_bottom;txname=texture"
-    name: "@MODASSETSROOT/models/block/@registryname.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= TrapDoor"
-    writer: json
-    variables: "model=trapdoor_top;txname=texture"
-    name: "@MODASSETSROOT/models/block/@registryname_top.json"
-  - template: json/block.json.ftl
-    deleteWhenConditionFalse: true
-    condition: "blockBase %= TrapDoor"
-    writer: json
-    variables: "model=trapdoor_open;txname=texture"
-    name: "@MODASSETSROOT/models/block/@registryname_open.json"
 
   # TX: Leaves templates
   - template: json/block_item.json.ftl
@@ -160,11 +95,6 @@ templates:
     writer: json
     variables: "variant=normal"
     name: "@MODASSETSROOT/blockstates/@registryname.json"
-  - template: json/block.json.ftl
-    condition: "blockBase %= Leaves"
-    writer: json
-    variables: "model=cube_all;txname=all"
-    name: "@MODASSETSROOT/models/block/@registryname.json"
 
 localizationkeys:
   - key: tile.@registryname.name

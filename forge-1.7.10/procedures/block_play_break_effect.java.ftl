@@ -1,2 +1,2 @@
 <#include "mcitems.ftl">
-world.playEvent(2001, new BlockPos((int)${input$x},(int)${input$y},(int)${input$z}), Block.getStateId(${mappedBlockToBlockStateCode(input$block)}));
+world.playBroadcastSound(2001,${input$x},${input$y},${input$z}, Block.getIdFromBlock(${input$block}));

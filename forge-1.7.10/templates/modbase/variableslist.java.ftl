@@ -211,7 +211,7 @@ public class ${JavaModName}Variables {
 
 		@Override public void toBytes(io.netty.buffer.ByteBuf buf) {
 			buf.writeInt(this.type);
-			ByteBufUtils.writeTag(buf, this.data.writeToNBT(new NBTTagCompound()));
+			ByteBufUtils.writeTag(buf, new NBTTagCompound());
 		}
 
 		@Override public void fromBytes(io.netty.buffer.ByteBuf buf) {

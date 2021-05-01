@@ -74,8 +74,8 @@ package ${package};
 		GameRegistry.registerItem((Item) elements.getItems(),elements.getItems().getClass().getName(),${modid}.MODID);
 	}
 
-	@SubscribeEvent public void registerBiomes(RegistryEvent.Register<Biome> event) {
-		event.getRegistry().registerAll(elements.getBiomes().stream().map(Supplier::get).toArray(Biome[]::new));
+	@SubscribeEvent public void registerBiomes(RegistryEvent.Register<BiomeGenBase> event) {
+		event.getRegistry().registerAll(elements.getBiomes().stream().map(Supplier::get).toArray(BiomeGenBase[]::new));
 	}
 
 	@SubscribeEvent public void registerEntities(RegistryEvent.Register<EntityEntry> event) {

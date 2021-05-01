@@ -90,7 +90,7 @@ package ${package}.block;
 	public static class BlockCustomFlower extends Block<#if data.plantType == "normal">Flower<#elseif data.plantType == "growapable">Reed</#if> {
 
 		public BlockCustomFlower() {
-			setSoundType(SoundType.${data.soundOnStep});
+			setStepSound(${data.soundOnStep});
 			setCreativeTab(${data.creativeTab});
 			setHardness(${data.hardness}F);
 			setResistance(${data.resistance}F);

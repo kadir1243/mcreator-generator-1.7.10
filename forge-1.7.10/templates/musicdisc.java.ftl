@@ -16,10 +16,6 @@ package ${package}.item;
 		elements.items.add(() -> new MusicDiscItemCustom());
 	}
 
-	@SideOnly(Side.CLIENT) @Override public void registerModels(ModelRegistryEvent event) {
-		ModelLoader.setCustomModelResourceLocation(block, 0, new ModelResourceLocation("${modid}:${registryname}" ,"inventory"));
-	}
-
 	public static class MusicDiscItemCustom extends ItemRecord {
 
 		public MusicDiscItemCustom() {
@@ -29,7 +25,7 @@ package ${package}.item;
 			super("${registryname}", (net.minecraft.util.SoundEvent) net.minecraft.util.SoundEvent.REGISTRY.getObject(new ResourceLocation("${data.music}")));
 			</#if>
 			setUnlocalizedName("${registryname}");
-			setRegistryName("${registryname}");
+			setTextureName("${modid}:${data.texture}")
 			setCreativeTab(${data.creativeTab});
 		}
 

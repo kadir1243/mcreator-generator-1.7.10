@@ -48,8 +48,9 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 			event.getRegistry().register(sound.getValue().setRegistryName(sound.getKey()));
 	}
 
-	@Override public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator cg, IChunkProvider cp) {
-		elements.forEach(element -> element.generateWorld(random, chunkX * 16, chunkZ * 16, world, world.provider.getDimension(), cg, cp));
+	@Override
+	public void generate(Random random, int chunkX, int chunkZ, World world,IChunkProvider iChunkProvider, IChunkProvider cp) {
+		elements.forEach(element -> element.generateWorld(random, chunkX * 16, chunkZ * 16, world, world.provider.getDimensionName(),cp));
 	}
 
 	@Override public int getBurnTime(ItemStack fuel) {
@@ -152,13 +153,10 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 		public void preInit(FMLPreInitializationEvent event) {
 		}
 
-		public void generateWorld(Random random, int posX, int posZ, World world, int dimID, IChunkGenerator cg, IChunkProvider cp) {
+		public void generateWorld(Random random, int posX, int posZ, World world, int dimID, IChunkProvider cp) {
 		}
 
 		public void serverLoad(FMLServerStartingEvent event) {
-		}
-
-		public void registerModels(ModelRegistryEvent event) {
 		}
 
 		public int addFuel(ItemStack fuel) {

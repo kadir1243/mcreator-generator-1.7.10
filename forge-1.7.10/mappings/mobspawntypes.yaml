@@ -1,5 +1,5 @@
-_default: EnumCreatureType.MONSTER
-monster: EnumCreatureType.MONSTER
-creature: EnumCreatureType.CREATURE
-ambient: EnumCreatureType.AMBIENT
-waterCreature: EnumCreatureType.WATER_CREATURE
+_default: EnumCreatureType.monster
+monster: EnumCreatureType.monster
+creature: EnumCreatureType.creature
+ambient: EnumCreatureType.ambient
+waterCreature: EnumCreatureType.waterCreature

@@ -43,8 +43,5 @@ package ${package};
 	@Override public void serverLoad(FMLServerStartingEvent event) {
 	}
 
-	@Override public void registerModels(ModelRegistryEvent event) {
-	}
-
 }
 <#-- @formatter:on -->

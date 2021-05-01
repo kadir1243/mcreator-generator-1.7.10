@@ -30,16 +30,16 @@ package ${package}.world.biome;
         </#if>
 	}
 
-	static class BiomeGenCustom extends Biome {
+	static class BiomeGenCustom extends BiomeGenBase {
 
 		public BiomeGenCustom() {
 			super(new Biome.BiomeProperties("${data.name!registryname}").setRainfall(${data.rainingPossibility}F)
 				.setBaseHeight(${data.baseHeight}F)
 				<#if data.waterColor?has_content>.setWaterColor(${data.waterColor.getRGB()})</#if>
 				.setHeightVariation(${data.heightVariation}F).setTemperature(${data.temperature}F));
-			setRegistryName("${registryname}");
-			topBlock = ${mappedBlockToBlockStateCode(data.groundBlock)};
-			fillerBlock = ${mappedBlockToBlockStateCode(data.undergroundBlock)};
+			setBiomeName("${registryname}");
+			topBlock = ${data.groundBlock};
+			fillerBlock = ${data.undergroundBlock};
 			decorator.treesPerChunk = ${data.treesPerChunk};
 			decorator.flowersPerChunk = ${data.flowersPerChunk};
 			decorator.grassPerChunk = ${data.grassPerChunk};
@@ -132,18 +132,18 @@ package ${package}.world.biome;
 				if (!spawnTree) {
 					return false;
 				} else {
-					Block ground = world.getBlockState(position.add(0, -1, 0)).getBlock();
-					Block ground2 = world.getBlockState(position.add(0, -2, 0)).getBlock();
-					if (!((ground == ${mappedBlockToBlockStateCode(data.groundBlock)}.getBlock()
-							|| ground == ${mappedBlockToBlockStateCode(data.undergroundBlock)}.getBlock())
-							&& (ground2 == ${mappedBlockToBlockStateCode(data.groundBlock)}.getBlock()
-							|| ground2 == ${mappedBlockToBlockStateCode(data.undergroundBlock)}.getBlock())
+					Block ground = world.getBlockState(position.add(0, -1, 0));
+					Block ground2 = world.getBlockState(position.add(0, -2, 0));
+					if (!((ground == ${data.groundBlock}
+							|| ground == ${data.undergroundBlock})
+							&& (ground2 == ${data.groundBlock}
+							|| ground2 == ${data.undergroundBlock})
 						))
 						return false;
 
 					IBlockState state = world.getBlockState(position.down());
 					if (position.getY() < world.getHeight() - height - 1) {
-						world.setBlockState(position.down(), ${mappedBlockToBlockStateCode(data.undergroundBlock)}, 2);
+						world.setBlockState(position.down(), ${data.undergroundBlock}, 2);
 
 						for (int genh = position.getY() - 3 + height; genh <= position.getY() + height; genh++) {
 							int i4 = genh - (position.getY() + height);
@@ -155,14 +155,14 @@ package ${package}.world.biome;
 
 									if (Math.abs(position.getX()) != j1 || Math.abs(j2) != j1 || rand.nextInt(2) != 0 && i4 != 0) {
 										BlockPos blockpos = new BlockPos(k1, genh, i2);
-										state = world.getBlockState(blockpos);
+										state = world.getBlock(blockpos);
 
-										if (state.getBlock().isAir(state, world, blockpos) || state.getBlock()
+										if (state.isAir(state, world, blockpos) || state
 												.isLeaves(state, world, blockpos)
-												|| state.getBlock() == ${mappedBlockToBlockStateCode(data.treeVines)}.getBlock()
-												|| state.getBlock() == ${mappedBlockToBlockStateCode(data.treeBranch)}.getBlock()) {
+												|| state == ${data.treeVines}
+												|| state == ${data.treeBranch}) {
 											this.setBlockAndNotifyAdequately(world,
-													blockpos, ${mappedBlockToBlockStateCode(data.treeBranch)});
+													blockpos, ${data.treeBranch});
 										}
 									}
 								}
@@ -171,26 +171,26 @@ package ${package}.world.biome;
 
 						for (int genh = 0; genh < height; genh++) {
 							BlockPos genhPos = position.up(genh);
-							state = world.getBlockState(genhPos);
+							state = world.getBlock(genhPos);
 
-							if (state.getBlock().isAir(state, world, genhPos) || state.getBlock() == ${mappedBlockToBlockStateCode(data.treeVines)}.getBlock()
-										|| state.getBlock() == ${mappedBlockToBlockStateCode(data.treeBranch)}.getBlock()){
+							if (state.isAir(state, world, genhPos) || state == ${data.treeVines}
+										|| state == ${data.treeBranch}){
 
-								this.setBlockAndNotifyAdequately(world, position.up(genh), ${mappedBlockToBlockStateCode(data.treeStem)});
+								this.setBlockAndNotifyAdequately(world, position.up(genh), ${data.treeStem});
 
 								<#if !data.treeVines.isEmpty()>
 								if (genh > 0) {
 									if (rand.nextInt(3) > 0 && world.isAirBlock(position.add(-1, genh, 0)))
-										this.setBlockAndNotifyAdequately(world, position.add(-1, genh, 0), ${mappedBlockToBlockStateCode(data.treeVines)});
+										this.setBlockAndNotifyAdequately(world, position.add(-1, genh, 0), ${data.treeVines});
 
 									if (rand.nextInt(3) > 0 && world.isAirBlock(position.add(1, genh, 0)))
-										this.setBlockAndNotifyAdequately(world, position.add(1, genh, 0), ${mappedBlockToBlockStateCode(data.treeVines)});
+										this.setBlockAndNotifyAdequately(world, position.add(1, genh, 0), ${data.treeVines});
 
 									if (rand.nextInt(3) > 0 && world.isAirBlock(position.add(0, genh, -1)))
-										this.setBlockAndNotifyAdequately(world, position.add(0, genh, -1), ${mappedBlockToBlockStateCode(data.treeVines)});
+										this.setBlockAndNotifyAdequately(world, position.add(0, genh, -1), ${data.treeVines});
 
 									if (rand.nextInt(3) > 0 && world.isAirBlock(position.add(0, genh, 1)))
-										this.setBlockAndNotifyAdequately(world, position.add(0, genh, 1), ${mappedBlockToBlockStateCode(data.treeVines)});
+										this.setBlockAndNotifyAdequately(world, position.add(0, genh, 1), ${data.treeVines});
 								}
                                 </#if>
 							}
@@ -204,8 +204,8 @@ package ${package}.world.biome;
 										BlockPos bpos = new BlockPos(genx, genh, genz);
 
 										state = world.getBlockState(bpos);
-										if (state.getBlock().isLeaves(state, world, bpos)
-												|| state.getBlock() == ${mappedBlockToBlockStateCode(data.treeBranch)}.getBlock()) {
+										if (state.isLeaves(state, world, bpos)
+												|| state == ${data.treeBranch}.) {
 											BlockPos blockpos1 = bpos.south();
 											BlockPos blockpos2 = bpos.west();
 											BlockPos blockpos3 = bpos.east();
@@ -235,7 +235,7 @@ package ${package}.world.biome;
 									if (rand.nextInt(4 - hlevel) == 0) {
 										EnumFacing enumfacing1 = enumfacing.getOpposite();
 										this.setBlockAndNotifyAdequately(world, position.add(enumfacing1.getFrontOffsetX(), height - 5 + hlevel,
-														enumfacing1.getFrontOffsetZ()), ${mappedBlockToBlockStateCode(data.treeFruits)});
+														enumfacing1.getFrontOffsetZ()), ${data.treeFruits});
 									}
 								}
 							}
@@ -253,25 +253,25 @@ package ${package}.world.biome;
 		}
 
 		private void addVines(World world, BlockPos pos) {
-			this.setBlockAndNotifyAdequately(world, pos, ${mappedBlockToBlockStateCode(data.treeVines)});
+			this.setBlockAndNotifyAdequately(world, pos, ${data.treeVines});
 			int i = 5;
 			for (BlockPos blockpos = pos.down(); world.isAirBlock(blockpos) && i > 0; --i) {
-				this.setBlockAndNotifyAdequately(world, blockpos, ${mappedBlockToBlockStateCode(data.treeVines)});
+				this.setBlockAndNotifyAdequately(world, blockpos, ${data.treeVines});
 				blockpos = blockpos.down();
 			}
 		}
 
 		@Override protected boolean canGrowInto(Block blockType) {
-        	return blockType.getDefaultState().getMaterial() == Material.AIR ||
-					blockType == ${mappedBlockToBlockStateCode(data.treeStem)}.getBlock() ||
-					blockType == ${mappedBlockToBlockStateCode(data.treeBranch)}.getBlock() ||
-					blockType == ${mappedBlockToBlockStateCode(data.groundBlock)}.getBlock() ||
-					blockType == ${mappedBlockToBlockStateCode(data.undergroundBlock)}.getBlock();
+        	return blockType.getDefaultState().getMaterial() == Material.air ||
+					blockType == ${data.treeStem} ||
+					blockType == ${data.treeBranch} ||
+					blockType == ${data.groundBlock} ||
+					blockType == ${data.undergroundBlock};
 		}
 
 		@Override protected void setDirtAt(World world, BlockPos pos) {
-			if (world.getBlockState(pos).getBlock() != ${mappedBlockToBlockStateCode(data.undergroundBlock)}.getBlock())
-            	this.setBlockAndNotifyAdequately(world, pos, ${mappedBlockToBlockStateCode(data.undergroundBlock)});
+			if (world.getBlock(pos) != ${data.undergroundBlock})
+            	this.setBlockAndNotifyAdequately(world, pos, ${data.undergroundBlock});
 		}
 
 		@Override public boolean isReplaceable(World world, BlockPos pos) {

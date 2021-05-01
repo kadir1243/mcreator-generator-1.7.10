@@ -343,7 +343,7 @@ package ${package}.entity;
 					return false;
 			</#if>
 			<#if data.immuneToDrowning>
-				if (source == DamageSource.drownF)
+				if (source == DamageSource.drown)
 					return false;
 			</#if>
 			<#if data.immuneToLightning>
@@ -446,12 +446,12 @@ package ${package}.entity;
 			}
 
 		    public void attackEntityWithRangedAttack(EntityLivingBase target, float flval) {
-				EntityArrowCustom entityarrow = new EntityArrowCustom(this.world, this);
+				EntityArrowCustom entityarrow = new EntityArrowCustom(this.worldObj, this);
 				double d0 = target.posY + (double) target.getEyeHeight() - 1.1;
 				double d1 = target.posX - this.posX;
 				double d3 = target.posZ - this.posZ;
-				entityarrow.shoot(d1, d0 - entityarrow.posY + (double) MathHelper.sqrt(d1 * d1 + d3 * d3) * 0.2F, d3, 1.6F, 12.0F);
-				this.world.spawnEntity(entityarrow);
+				entityarrow.shoot(d1, d0 - entityarrow.posY + (double) MathHelper.sqrt_double(d1 * d1 + d3 * d3) * 0.2F, d3, 1.6F, 12.0F);
+				this.worldObj.spawnEntity(entityarrow);
 			}
         </#if>
 
@@ -577,7 +577,7 @@ package ${package}.entity;
 					this.prevLimbSwingAmount = this.limbSwingAmount;
 					double d1 = this.posX - this.prevPosX;
 					double d0 = this.posZ - this.prevPosZ;
-					float f1 = MathHelper.sqrt(d1 * d1 + d0 * d0) * 4.0F;
+					float f1 = MathHelper.sqrt_double(d1 * d1 + d0 * d0) * 4.0F;
 					if (f1 > 1.0F) f1 = 1.0F;
 					this.limbSwingAmount += (f1 - this.limbSwingAmount) * 0.4F;
 					this.limbSwing += this.limbSwingAmount;
@@ -614,7 +614,7 @@ package ${package}.entity;
 	}
 
 	<#if data.ranged >
-    public static class EntityArrowCustom extends EntityTippedArrow {
+    public static class EntityArrowCustom extends EntityArrow {
 
 		public EntityArrowCustom(World a) {
 			super(a);

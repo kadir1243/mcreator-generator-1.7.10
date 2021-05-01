@@ -18,7 +18,18 @@ package ${package}.block;
 	public Block${name} (Elements${JavaModName} instance) {
 		super(instance, ${data.getModElement().getSortID()});
 	}
-
+	@Override
+   	 public void registerBlockIcons(IIconRegister reg)
+   	 {
+    	    {
+    	        icons[0] = reg.registerIcon("${modid}:${data.texture}");
+    	        icons[1] = reg.registerIcon("${modid}:${data.textureTop?has_content?then(data.textureTop, data.texture)}");
+    	        icons[2] = reg.registerIcon("${modid}:${data.textureFront?has_content?then(data.textureFront, data.texture)}");
+    	        icons[3] = reg.registerIcon("${modid}:${data.textureBack?has_content?then(data.textureBack, data.texture)}");
+    	        icons[4] = reg.registerIcon("${modid}:${data.textureRight?has_content?then(data.textureRight, data.texture)}");
+    	        icons[5] = reg.registerIcon("${modid}:${data.textureLeft?has_content?then(data.textureLeft, data.texture)}");
+    	    }
+   	 }
 	@Override public void initElements() {
 		<#if data.blockBase?has_content && data.blockBase == "Slab">
 		elements.blocks.add(() -> new BlockCustom().setRegistryName("${registryname}"));
@@ -29,6 +40,10 @@ package ${package}.block;
 		elements.items.add(() -> new ItemBlock(block).setRegistryName(block.getRegistryName()));
 		</#if>
 	}
+	 @Override
+    public IIcon getIcon(int side, int meta){
+        return icons[side];
+    }
 
 	<#if data.hasInventory>
 	@Override public void init(FMLInitializationEvent event) {
@@ -121,7 +136,7 @@ package ${package}.block;
 
 		public BlockCustom() {
 			<#if data.blockBase?has_content && data.blockBase == "Stairs">
-			super(new Block(Material.${data.material}).getDefaultState());
+			super(new Block(Material.${data.material}));
 			<#elseif data.blockBase?has_content && data.blockBase == "Wall">
 			super(new Block(Material.${data.material}));
 			<#elseif data.blockBase?has_content && data.blockBase == "Fence">

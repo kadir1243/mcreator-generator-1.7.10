@@ -64,12 +64,14 @@ package ${package};
 		proxy.serverLoad(event);
 	}
 
-	@SubscribeEvent public void registerBlocks(RegistryEvent.Register<Block> event) {
-		event.getRegistry().registerAll(elements.getBlocks().stream().map(Supplier::get).toArray(Block[]::new));
+	@SubscribeEvent
+	public void registerBlocks() {
+		GameRegistry.registerBlock((Block) elements.getBlocks(), (Class<? extends ItemBlock>) elements.getBlocks().getClass(),elements.getBlocks().getClass().getName());
 	}
 
-	@SubscribeEvent public void registerItems(RegistryEvent.Register<Item> event) {
-		event.getRegistry().registerAll(elements.getItems().stream().map(Supplier::get).toArray(Item[]::new));
+	@SubscribeEvent
+	public void registerItems() {
+		GameRegistry.registerItem((Item) elements.getItems(),elements.getItems().getClass().getName(),${modid}.MODID);
 	}
 
 	@SubscribeEvent public void registerBiomes(RegistryEvent.Register<Biome> event) {

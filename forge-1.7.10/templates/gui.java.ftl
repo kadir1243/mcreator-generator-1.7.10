@@ -280,7 +280,7 @@ package ${package}.gui;
                 <#if component.getClass().getSimpleName() == "TextField">
                 ${component.name}.drawTextBox();
                 <#elseif component.getClass().getSimpleName() == "Label">
-                this.fontRenderer.drawString("${translateTokens(JavaConventions.escapeStringForJava(component.text))}",
+                this.fontRendererObj.drawString("${translateTokens(JavaConventions.escapeStringForJava(component.text))}",
 					${(component.x - mx / 2)?int}, ${(component.y - my / 2)?int}, ${component.color.getRGB()});
                 </#if>
             </#list>
@@ -307,7 +307,7 @@ package ${package}.gui;
                 <#if component.getClass().getSimpleName() == "TextField">
                     ${component.name} =
 					new GuiTextField(${tfid},
-							this.fontRenderer, ${(component.x - mx/2)?int}, ${(component.y - my/2)?int},
+							this.fontRendererObj, ${(component.x - mx/2)?int}, ${(component.y - my/2)?int},
                         ${component.width}, ${component.height});
                     guistate.put("text:${component.name}", ${component.name});
                     ${component.name}.setMaxStringLength(32767);

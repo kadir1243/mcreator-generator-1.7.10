@@ -22,8 +22,8 @@ package ${package}.item;
 			setMaxDamage(${data.damageCount});
 			maxStackSize = ${data.stackSize};
 			setUnlocalizedName("${registryname}");
-			setRegistryName("${registryname}");
 			setCreativeTab(${data.creativeTab});
+			setTextureName("${modid}:${data.texture}")
 			<#if data.stayInGridWhenCrafting>
 			setContainerItem(this);
             </#if>
@@ -45,7 +45,7 @@ package ${package}.item;
 			@Override public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot slot) {
 				Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(slot);
 				if (slot == EntityEquipmentSlot.MAINHAND) {
-					multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Item modifier", (double) ${data.damageVsEntity - 4}, 0));
+					multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Item modifier", (double) ${data.damageVsEntity - 4}, 0));
 					multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Item modifier", -2.4, 0));
 				}
 				return multimap;

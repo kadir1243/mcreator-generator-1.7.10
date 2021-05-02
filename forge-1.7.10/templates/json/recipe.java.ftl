@@ -6,29 +6,21 @@ package ${package}.item.crafting;
   <#if data.recipeShapeless>
     <#list data.recipeSlots as element>
         <#if !element.isEmpty()>
-            <#assign ingredients += "{${mappedMCItemToIngameItemName(element)}},">
+            <#assign ingredients += "{${element}},">
         </#if>
     </#list>
       ${ingredients[0..(ingredients?last_index_of(',') - 1)]}
-			GameRegistry.addShapelessRecipe(new ItemStack(Items.${mappedMCItemToIngameItemName(data.recipeReturnStack)}), Items.iron_ingot, Items.flint);
+			GameRegistry.addShapelessRecipe(new ItemStack(Items.${data.recipeReturnStack}), Items.iron_ingot, Items.flint);
   <#else>
-  "type": "minecraft:crafting_shaped",
     <#assign recipeArray = data.getOptimisedRecipe()>
     <#assign rm = [], i = 0>
-    "pattern": [
-    <#list recipeArray as rl>
-			"<#list rl as re><#if !re.isEmpty()><#assign rm+=["\"${i}\": {${mappedMCItemToIngameItemName(re)}}"]/>${i}<#else> </#if><#assign i+=1></#list>"<#if rl?has_next>,</#if>
-    </#list>
-    ],
     "key": {
     <#list rm as recipeMapping>
-        ${recipeMapping}<#if recipeMapping?has_next>,</#if>
+        ${recipeMapping}<#if recipeMapping?has_next></#if>
     </#list>
-    },
+    }
   </#if>
-    "result": {
-        ${mappedMCItemToIngameItemName(data.recipeReturnStack)},
-    "count": ${data.recipeRetstackSize}}
+  			GameRegistry.addShapelessRecipe(new ItemStack(${data.recipeReturnStack},${data.recipeRetstackSize}), <#list recipeArray as rl>"<#list rl as re><#if !re.isEmpty()><#assign rm+=["\"${i}\": {${re}}"]/>${i}<#else></#if><#assign i+=1></#list>"<#if rl?has_next>,</#if></#list>,Items.iron_ingot, Items.flint);
   }
 }
 <#-- @formatter:on -->

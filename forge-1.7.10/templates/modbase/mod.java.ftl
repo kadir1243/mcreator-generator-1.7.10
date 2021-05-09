@@ -71,7 +71,7 @@ package ${package};
 
 	@SubscribeEvent
 	public void registerItems() {
-		GameRegistry.registerItem((Item) elements.getItems(),elements.getItems().getClass().getName(),${modid}.MODID);
+		GameRegistry.registerItem((Item) elements.getItems(),elements.getItems().getClass().getName(),this.MODID);
 	}
 
 	@SubscribeEvent public void registerBiomes(RegistryEvent.Register<BiomeGenBase> event) {
@@ -90,11 +90,7 @@ package ${package};
 	public void registerSounds(SoundRegistry event) {
 		elements.registerSounds(event);
 	}
-
-	@SubscribeEvent @SideOnly(Side.CLIENT) public void registerModels(ModelRegistryEvent event) {
-		elements.getElements().forEach(element -> element.registerModels(event));
-	}
-
+	
 	static {
 		FluidRegistry.enableUniversalBucket();
 	}

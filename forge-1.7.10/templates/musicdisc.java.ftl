@@ -25,7 +25,7 @@ package ${package}.item;
 			super("${registryname}", (net.minecraft.util.SoundEvent) net.minecraft.util.SoundEvent.REGISTRY.getObject(new ResourceLocation("${data.music}")));
 			</#if>
 			setUnlocalizedName("${registryname}");
-			setTextureName("${modid}:${data.texture}")
+			setTextureName("${modid}:${data.texture}");
 			setCreativeTab(${data.creativeTab});
 		}
 

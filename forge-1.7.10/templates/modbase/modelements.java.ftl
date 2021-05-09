@@ -50,7 +50,7 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world,IChunkProvider iChunkProvider, IChunkProvider cp) {
-		elements.forEach(element -> element.generateWorld(random, chunkX * 16, chunkZ * 16, world, world.provider.getDimensionName(),cp));
+		elements.forEach(element -> element.generateWorld(random, chunkX * 16, chunkZ * 16, world, world.provider.dimensionId,cp));
 	}
 
 	@Override public int getBurnTime(ItemStack fuel) {

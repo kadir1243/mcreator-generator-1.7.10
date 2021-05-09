@@ -132,8 +132,8 @@ package ${package}.world.biome;
 				if (!spawnTree) {
 					return false;
 				} else {
-					Block ground = world.getBlockState(position.add(0, -1, 0));
-					Block ground2 = world.getBlockState(position.add(0, -2, 0));
+					Block ground = world.getBlock(position.add(0, -1, 0));
+					Block ground2 = world.getBlock(position.add(0, -2, 0));
 					if (!((ground == ${data.groundBlock}
 							|| ground == ${data.undergroundBlock})
 							&& (ground2 == ${data.groundBlock}
@@ -141,7 +141,7 @@ package ${package}.world.biome;
 						))
 						return false;
 
-					IBlockState state = world.getBlockState(position.down());
+					IBlockState state = world.getBlock(position.down());
 					if (position.getY() < world.getHeight() - height - 1) {
 						world.setBlockState(position.down(), ${data.undergroundBlock}, 2);
 
@@ -203,9 +203,9 @@ package ${package}.world.biome;
 									for (int genz = position.getZ() - k4; genz <= position.getZ() + k4; genz++) {
 										BlockPos bpos = new BlockPos(genx, genh, genz);
 
-										state = world.getBlockState(bpos);
+										state = world.getBlock(bpos);
 										if (state.isLeaves(state, world, bpos)
-												|| state == ${data.treeBranch}.) {
+												|| state == ${data.treeBranch}) {
 											BlockPos blockpos1 = bpos.south();
 											BlockPos blockpos2 = bpos.west();
 											BlockPos blockpos3 = bpos.east();
@@ -275,7 +275,7 @@ package ${package}.world.biome;
 		}
 
 		@Override public boolean isReplaceable(World world, BlockPos pos) {
-			net.minecraft.block.state.IBlockState state = world.getBlockState(pos);
+			net.minecraft.block.state.IBlockState state = world.getBlock(pos);
         	return state.getBlock().isAir(state, world, pos) || canGrowInto(state.getBlock()) || state.getBlock().isReplaceable(world, pos);
 		}
 

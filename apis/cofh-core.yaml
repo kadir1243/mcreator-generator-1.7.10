@@ -1,0 +1,15 @@
+---
+forge-1.7.10:
+  gradle: |
+      repositories {
+        maven {
+          url = "https://www.cursemaven.com"
+        }
+      }
+      
+      dependencies {
+        compile "curse.maven:cofh-core-69162:2388750"
+      }
+  update_files:
+    - ~
+name: "cofh-core"

@@ -23,7 +23,7 @@ package ${package}.item;
 			maxStackSize = ${data.stackSize};
 			setUnlocalizedName("${registryname}");
 			setCreativeTab(${data.creativeTab});
-			setTextureName("${modid}:${data.texture}")
+			setTextureName("${modid}:${data.texture}");
 			<#if data.stayInGridWhenCrafting>
 			setContainerItem(this);
             </#if>

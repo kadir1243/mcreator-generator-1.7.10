@@ -1,2 +1,1 @@
-(world.getBlockState(new BlockPos((int)${input$x},(int)${input$y},(int)${input$z}))
-        .getBlockHardness(world, new BlockPos((int)${input$x},(int)${input$y},(int)${input$z})))
+(world.getBlock(${input$x},${input$y},${input$z}).getBlockHardness(world, ${input$x},${input$y},${input$z}))

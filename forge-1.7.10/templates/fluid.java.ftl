@@ -20,7 +20,7 @@ package ${package}.block;
 	}
 
 	@Override public void initElements() {
-		elements.blocks.add(() -> new BlockFluidClassic(fluid, Material.${data.type}){
+		elements.blocks.add(() -> new BlockFluidClassic(fluid, Material.${data.type?lower_case}){
 			<#if hasProcedure(data.onBlockAdded)>
 			@Override public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
 				super.onBlockAdded(world, pos, state);
@@ -87,7 +87,7 @@ package ${package}.block;
 	}
 
 	<#if (data.spawnWorldTypes?size > 0)>
-	@Override public void generateWorld(Random random,int chunkX,int chunkZ,World world,int dimID,IChunkGenerator cg,IChunkProvider cp){
+	@Override public void generateWorld(Random random,int chunkX,int chunkZ,World world,int dimID,IChunkProvider cp){
 		boolean dimensionCriteria=false;
 
     	<#list data.spawnWorldTypes as worldType>
@@ -113,7 +113,7 @@ package ${package}.block;
 		int j = random.nextInt(256);
 		int k = chunkZ + random.nextInt(16) + 8;
 
-		new WorldGenLakes(block).generate(world, random, new BlockPos(i, j, k));
+		new WorldGenLakes(block).generate(world, random, i, j, k);
 	}
 	</#if>
 

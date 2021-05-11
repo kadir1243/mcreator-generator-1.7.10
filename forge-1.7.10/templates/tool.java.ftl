@@ -146,7 +146,7 @@ package ${package}.item;
 		}
         </#if>
 
-		}.setUnlocalizedName("${registryname}").setRegistryName("${registryname}").setCreativeTab(${data.creativeTab}));
+		}.setUnlocalizedName("${registryname}").setUnlocalizedName("${registryname}").setCreativeTab(${data.creativeTab}));
 	}
 
 	@SideOnly(Side.CLIENT) @Override public void registerModels(ModelRegistryEvent event) {
@@ -164,7 +164,7 @@ package ${package}.item;
 		@Override public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
 			Multimap<String, AttributeModifier> multimap = super.getItemAttributeModifiers(equipmentSlot);
 			if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
-				multimap.put(SharedMonsterAttributes.ATTACK_DAMAGE.getName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", ${data.damageVsEntity - 4}f, 0));
+				multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", ${data.damageVsEntity - 4}f, 0));
 				multimap.put(SharedMonsterAttributes.ATTACK_SPEED.getName(), new AttributeModifier(ATTACK_SPEED_MODIFIER, "Tool modifier", ${data.attackSpeed - 4}, 0));
 			}
 			return multimap;

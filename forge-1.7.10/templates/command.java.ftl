@@ -16,7 +16,7 @@ package ${package}.command;
 	public static class CommandHandler implements ICommand {
 
 		@Override public int compareTo(ICommand c) {
-			return getName().compareTo(c.getName());
+			return getName().compareTo(c.getCommandName());
 		}
 
 		@Override public boolean checkPermission(MinecraftServer server, ICommandSender var1) {
@@ -46,12 +46,12 @@ package ${package}.command;
 
 		@Override public void execute(MinecraftServer server, ICommandSender sender, String[] cmd) {
 			<#if hasProcedure(data.onCommandExecuted)>
-				int x = sender.getPosition().getX();
-				int y = sender.getPosition().getY();
-				int z = sender.getPosition().getZ();
+				int x = sender.getPlayerCoordinates().posX;
+				int y = sender.getPlayerCoordinates().posY;
+				int z = sender.getPlayerCoordinates().posZ;
 				Entity entity = sender.getCommandSenderEntity();
 				if (entity != null) {
-					World world = entity.world;
+					World world = entity.worldObj;
 
 					HashMap<String, String> cmdparams = new HashMap<>();
 					int[] index = { 0 };

@@ -1,2 +1,1 @@
-(world.getBlockState(new BlockPos((int)${input$x},(int)${input$y},(int)${input$z}))
-        .getEnchantPowerBonus(world, new BlockPos((int)${input$x},(int)${input$y},(int)${input$z})))
+(world.getBlock(${input$x},${input$y},${input$z}).getEnchantPowerBonus(world,${input$x},${input$y},${input$z}))

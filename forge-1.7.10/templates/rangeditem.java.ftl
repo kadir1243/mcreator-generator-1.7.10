@@ -61,7 +61,7 @@ package ${package}.item;
 					}
 				}
 
-				if (entity.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantments.INFINITY, itemstack) > 0 || slotID != -1) {
+				if (entity.capabilities.isCreativeMode || EnchantmentHelper.getEnchantmentLevel(Enchantment.infinity.effectId, itemstack) > 0 || slotID != -1) {
 				</#if>
 				float power = ${data.bulletPower}f;
 				EntityArrowCustom entityarrow = new EntityArrowCustom(world, entity);
@@ -81,12 +81,12 @@ package ${package}.item;
 				int z = (int) entity.posZ;
 				world.playSound((EntityPlayer) null, (double) x, (double) y, (double) z,
 						(net.minecraft.util.SoundEvent) net.minecraft.util.SoundEvent.REGISTRY
-								.getObject(new ResourceLocation(("${data.actionSound}"))), SoundCategory.NEUTRAL, 1,
+								.getObject(new ResourceLocation(("${data.actionSound}"))), SoundCategory.AMBIENT, 1,
 						1f / (itemRand.nextFloat() * 0.5f + 1f) + (power / 2));
 
 				<#if !data.ammoItem.isEmpty()>
 				if (entity.capabilities.isCreativeMode) {
-					entityarrow.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+					entityarrow.canBePickedUp = EntityArrow.PickupStatus.CREATIVE_ONLY;
 				} else {
 					if (${mappedMCItemToItemStackCode(data.ammoItem, 1)}.isItemStackDamageable()){
 						ItemStack stack = entity.inventory.getStackInSlot(slotID);
@@ -127,7 +127,7 @@ package ${package}.item;
 
 		<#if data.shootConstantly>
 			@Override public void onUsingTick(ItemStack itemstack, EntityLivingBase entityLivingBase, int count) {
-				World world = entityLivingBase.world;
+				World world = entityLivingBase.worldObj;
 				if (!world.isRemote && entityLivingBase instanceof EntityPlayerMP) {
 					EntityPlayerMP entity = (EntityPlayerMP) entityLivingBase;
 					<@arrowShootCode/>

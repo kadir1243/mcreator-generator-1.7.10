@@ -1,1 +1,1 @@
-(world.getSpawnPoint().getZ())
+(world.getSpawnPoint().posZ)

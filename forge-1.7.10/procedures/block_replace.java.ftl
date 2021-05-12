@@ -1,10 +1,9 @@
 <#include "mcitems.ftl">
 {
-	BlockPos _bp = new BlockPos((int)${input$x},(int)${input$y},(int)${input$z});
-	IBlockState _bs = ${mappedBlockToBlockStateCode(input$block)};
+	Block _bs = ${input$block};
 
 	<#if field$state?lower_case == "true">
-	IBlockState _bso = world.getBlockState(_bp);
+	Block _bso = world.getBlock(${input$x},${input$y},${input$z});
 	for(Map.Entry<IProperty<?>, Comparable<?>> entry : _bso.getProperties().entrySet()) {
 		IProperty _property = entry.getKey();
 		if (_bs.getPropertyKeys().contains(_property))
@@ -13,7 +12,7 @@
 	</#if>
 
 	<#if field$nbt?lower_case == "true">
-	TileEntity _te = world.getTileEntity(_bp);
+	TileEntity _te = world.getTileEntity(${input$x},${input$y},${input$z});
 	NBTTagCompound _bnbt = null;
 	if(_te != null) {
 		_bnbt = _te.writeToNBT(new NBTTagCompound());
@@ -21,7 +20,7 @@
 	}
 	</#if>
 
-	world.setBlockState(_bp, _bs, 3);
+	world.setBlock(${input$x},${input$y},${input$z}, _bs);
 
 	<#if field$nbt?lower_case == "true">
 	if(_bnbt != null) {

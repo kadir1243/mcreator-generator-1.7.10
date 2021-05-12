@@ -1,2 +1,2 @@
 <#include "mcitems.ftl">
-(${mappedMCItemToItemStackCode(input$item, 1)}).addEnchantment(Enchantments.${generator.map(field$enhancement, "enhancements")},(int) ${input$level});
+(${mappedMCItemToItemStackCode(input$item, 1)}).addEnchantment(Enchantment.${generator.map(field$enhancement, "enhancements")?lower_case},(int) ${input$level});

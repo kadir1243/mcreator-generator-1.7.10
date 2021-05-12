@@ -1,1 +1,1 @@
-((${input$entity} instanceof PlayerEntity) ? ((PlayerEntity)${input$entity}).getAbsorptionAmount() : 0)
+((${input$entity} instanceof EntityPlayer) ? ((EntityPlayer)${input$entity}).getAbsorptionAmount() : 0)

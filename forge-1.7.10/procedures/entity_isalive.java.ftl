@@ -1,1 +1,1 @@
-(${input$entity}.isAlive())
+(${input$entity}.isEntityAlive())

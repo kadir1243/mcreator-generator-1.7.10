@@ -32,19 +32,19 @@ package ${package}.gui.overlay;
 
 				if (<@procedureOBJToConditionCode data.displayCondition/>) {
 					<#if data.baseTexture?has_content>
-						GlStateManager.disableDepth();
+						GL11.glDisable(GL11.GL_DEPTH);
         				GL11.glDepthMask(false);
         				GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
         				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        				GlStateManager.disableAlpha();
+        				GL11.glDisable(GL11.GL_ALPHA);
 
 						Minecraft.getMinecraft().renderEngine
 									.bindTexture(new ResourceLocation("${modid}:textures/${data.baseTexture}"));
 						Minecraft.getMinecraft().ingameGUI.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, event.resolution.getScaledWidth(), event.resolution.getScaledHeight(), event.resolution.getScaledWidth(), event.resolution.getScaledHeight());
 
-						GlStateManager.depthMask(true);
-        				GlStateManager.enableDepth();
-        				GlStateManager.enableAlpha();
+						GL11.glDepthMask(true);
+        				GL11.glEnable(GL11.GL_DEPTH);
+        				GL11.glEnable(GL11.GL_ALPHA);
         				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 					</#if>
 
@@ -56,11 +56,11 @@ package ${package}.gui.overlay;
 								.drawString("${translateTokens(JavaConventions.escapeStringForJava(component.text))}",
 										posX + ${x}, posY + ${y}, ${component.color.getRGB()});
                         <#elseif component.getClass().getSimpleName() == "Image">
-							GlStateManager.disableDepth();
+							GL11.glDisable(GL11.GL_DEPTH);
 							GL11.glDepthMask(false);
 							GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
 							GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-							GlStateManager.disableAlpha();
+							GL11.glDisable(GL11.GL_ALPHA);
 
 							Minecraft.getMinecraft().renderEngine
 									.bindTexture(new ResourceLocation("${modid}:textures/${component.image}"));
@@ -70,8 +70,8 @@ package ${package}.gui.overlay;
 								${component.getWidth(w.getWorkspace())}, ${component.getHeight(w.getWorkspace())});
 
 							GL11.glDepthMask(true);
-        					GlStateManager.enableDepth();
-        					GlStateManager.enableAlpha();
+        					GL11.glEnable(GL11.GL_DEPTH);
+        					GL11.glEnable(GL11.GL_ALPHA);
         					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
                         </#if>
                     </#list>

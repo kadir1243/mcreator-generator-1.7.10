@@ -50,6 +50,8 @@ package ${package};
 
 	@Mod.EventHandler public void init(FMLInitializationEvent event) {
 		elements.getElements().forEach(element -> element.init(event));
+		GameRegistry.registerBlock((Block) elements.getBlocks(), (Class<? extends ItemBlock>) elements.getBlocks().getClass(),elements.getBlocks().getClass().getName());
+		GameRegistry.registerItem((Item) elements.getItems(),elements.getItems().getClass().getName(),this.MODID);
 
 		proxy.init(event);
 	}
@@ -62,16 +64,6 @@ package ${package};
 		elements.getElements().forEach(element -> element.serverLoad(event));
 
 		proxy.serverLoad(event);
-	}
-
-	@SubscribeEvent
-	public void registerBlocks() {
-		GameRegistry.registerBlock((Block) elements.getBlocks(), (Class<? extends ItemBlock>) elements.getBlocks().getClass(),elements.getBlocks().getClass().getName());
-	}
-
-	@SubscribeEvent
-	public void registerItems() {
-		GameRegistry.registerItem((Item) elements.getItems(),elements.getItems().getClass().getName(),this.MODID);
 	}
 
 	@SubscribeEvent public void registerBiomes(RegistryEvent.Register<BiomeGenBase> event) {

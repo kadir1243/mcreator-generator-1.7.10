@@ -2,16 +2,13 @@ public static class BlockCustomPortal extends BlockPortal {
 
 	public BlockCustomPortal() {
 		setHardness(-1.0F);
-		setUnlocalizedName("${registryname}_portal");
-		setRegistryName("${registryname}_portal");
+		setBlockName("${registryname}_portal");
 		setLightLevel(${data.portalLuminance / 15}F);
 	}
 
-	@Override public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
+	@Override public void updateTick(World world, int x, int y, int z, Random random) {
 		<#if hasProcedure(data.onPortalTickUpdate)>
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+
 			<@procedureOBJToCode data.onPortalTickUpdate/>
 		</#if>
 	}
@@ -33,35 +30,35 @@ public static class BlockCustomPortal extends BlockPortal {
 	@Override ${mcc.getMethod("net.minecraft.block.BlockPortal", "neighborChanged", "IBlockState", "World", "BlockPos", "Block", "BlockPos")
 	               .replace("BlockPortal.", "BlockCustomPortal.")}
 
-	@SideOnly(Side.CLIENT) @Override public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
+	@SideOnly(Side.CLIENT) @Override public void randomDisplayTick(World world, int x, int y, int z, Random random) {
 		for (int i = 0; i < 4; i++) {
-			double px = pos.getX() + random.nextFloat();
-			double py = pos.getY() + random.nextFloat();
-			double pz = pos.getZ() + random.nextFloat();
+			double px = x + random.nextFloat();
+			double py = y + random.nextFloat();
+			double pz = z + random.nextFloat();
 			double vx = (random.nextFloat() - 0.5) / 2f;
 			double vy = (random.nextFloat() - 0.5) / 2f;
 			double vz = (random.nextFloat() - 0.5) / 2f;
 			int j = random.nextInt(4) - 1;
-			if (world.getBlockState(pos.west()).getBlock() != this && world.getBlockState(pos.east()).getBlock() != this) {
-				px = pos.getX() + 0.5 + 0.25 * j;
+			if (world.getBlock(x - 1,y,z) != this && world.getBlock(x + 1,y,z) != this) {
+				px = x + 0.5 + 0.25 * j;
 				vx = random.nextFloat() * 2 * j;
 			} else {
-				pz = pos.getZ() + 0.5 + 0.25 * j;
+				pz = z + 0.5 + 0.25 * j;
 				vz = random.nextFloat() * 2 * j;
 			}
-			world.spawnParticle(EnumParticleTypes.${data.portalParticles}, px, py, pz, vx, vy, vz);
+			world.spawnParticle("${data.portalParticles}", px, py, pz, vx, vy, vz);
 		}
 
 		<#if data.portalSound.toString()?has_content>
 		if (random.nextInt(110) == 0)
-			world.playSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+			world.playSound(x + 0.5, y + 0.5, z + 0.5,
 					(net.minecraft.util.SoundEvent) net.minecraft.util.SoundEvent.REGISTRY
 							.getObject(new ResourceLocation(("${data.portalSound}"))), SoundCategory.BLOCKS, 0.5f,
 					random.nextFloat() * 0.4F + 0.8F, false);
 		</#if>
 	}
 
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+	public void onEntityCollidedWithBlock(World worldIn, int x, int y, int z, Entity entityIn) {
 		if (!worldIn.isRemote && !entityIn.isRiding() && !entityIn.isBeingRidden() && entityIn instanceof EntityPlayerMP) {
 			EntityPlayerMP thePlayer = (EntityPlayerMP) entityIn;
 			if (thePlayer.timeUntilPortal > 0) {

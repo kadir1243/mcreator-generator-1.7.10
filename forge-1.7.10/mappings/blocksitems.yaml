@@ -144,7 +144,7 @@ Blocks.FURNACE: Blocks.furnace
 Blocks.LIT_FURNACE: Blocks.lit_furnace
 Blocks.STANDING_SIGN: Blocks.standing_sign
 Blocks.WALL_SIGN: Blocks.wall_sign
-Blocks.DOOR: Blocks.wooden_door
+Blocks.OAK_DOOR: Blocks.wooden_door
 Blocks.IRON_DOOR: Blocks.iron_door
 Blocks.LADDER: Blocks.ladder
 Blocks.RAIL: Blocks.rail

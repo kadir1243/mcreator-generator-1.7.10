@@ -1,2 +1,2 @@
 <#include "mcitems.ftl">
-((${mappedBlockToBlockStateCode(input$block)}).getBlock() instanceof IGrowable)
+((${input$block}) instanceof IGrowable)

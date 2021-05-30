@@ -212,8 +212,8 @@ package ${package}.block;
 				return Item.getItemFromBlock(block);
 			}
 
-    		@Override public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-				return new ItemStack(block);
+    			@Override public Item getItem(World worldIn, int x, int y, int z) {
+       				 return super.getItem(worldIn, x, y, z);
 			}
 
 			@Override protected net.minecraft.block.state.BlockStateContainer createBlockState() {
@@ -456,7 +456,7 @@ package ${package}.block;
         </#if>
 
 		<#if data.isBeaconBase>
-		@Override public boolean isBeaconBase(IBlockAccess worldObj, BlockPos pos, BlockPos beacon) {
+		@Override public boolean isBeaconBase(IBlockAccess worldObj, int x, int y, int z, int beaconX, int beaconY, int beaconZ) {
 			return true;
 		}
         </#if>
@@ -480,25 +480,25 @@ package ${package}.block;
         </#if>
 
 		<#if data.isLadder>
-		@Override public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
+		@Override public boolean isLadder(IBlockAccess world, int x, int y, int z, EntityLivingBase entity) {
 			return true;
 		}
 		</#if>
 
 		<#if data.reactionToPushing != "NORMAL">
-		@Override public EnumPushReaction getMobilityFlag(IBlockState state) {
-			return EnumPushReaction.${data.reactionToPushing};
+		@Override public int getMobilityFlag() {
+			return ${data.reactionToPushing};
 		}
 		</#if>
 
 		<#if data.flammability != 0>
-		@Override public int getFlammability(IBlockAccess world, BlockPos pos, EnumFacing face) {
+		@Override public int getFlammability(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
 			return ${data.flammability};
 		}
 		</#if>
 
 		<#if data.fireSpreadSpeed != 0>
-		@Override public int getFireSpreadSpeed(IBlockAccess world, BlockPos pos, EnumFacing face) {
+		@Override public int getFireSpreadSpeed(IBlockAccess world, int x, int y, int z, ForgeDirection face) {
 			return ${data.fireSpreadSpeed};
 		}
 		</#if>
@@ -554,7 +554,7 @@ package ${package}.block;
         </#if>
 
 		<#if data.hasInventory>
-            @Override public TileEntity createNewTileEntity(World worldIn, int meta) {
+            @Override public TileEntity createTileEntity(World worldIn, int meta) {
 				return new TileEntityCustom();
 			}
 
@@ -565,7 +565,7 @@ package ${package}.block;
 				return tileentity == null ? false : tileentity.receiveClientEvent(eventID, eventParam);
 			}
 
-		    @Override public EnumBlockRenderType getRenderType(IBlockState state) {
+		    @Override public int getRenderType() {
 				return EnumBlockRenderType.MODEL;
 			}
 
@@ -580,7 +580,7 @@ package ${package}.block;
             </#if>
 
             <#if data.inventoryComparatorPower>
-            @Override public boolean hasComparatorInputOverride(IBlockState state) {
+            @Override public boolean hasComparatorInputOverride() {
 				return true;
 			}
 
@@ -595,13 +595,11 @@ package ${package}.block;
         </#if>
 
         <#if (hasProcedure(data.onTickUpdate) && !data.tickRandomly) || hasProcedure(data.onBlockAdded) >
-		@Override public void onBlockAdded(World world, BlockPos pos, IBlockState state) {
-			super.onBlockAdded(world, pos, state);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		@Override public void onBlockAdded(World world, int x, int y, int z) {
+			super.onBlockAdded(world, x,y,z);
+			
 			<#if hasProcedure(data.onTickUpdate) && !data.tickRandomly>
-			world.scheduleUpdate(new BlockPos(x, y, z), this, this.tickRate(world));
+			world.scheduleBlockUpdate(x, y, z, this, this.tickRate(world));
             </#if>
 			<@procedureOBJToCode data.onBlockAdded/>
 		}
@@ -609,13 +607,10 @@ package ${package}.block;
 
 		<#if hasProcedure(data.onRedstoneOn) || hasProcedure(data.onRedstoneOff) || hasProcedure(data.onNeighbourBlockChanges)>
 		@Override
-		public void neighborChanged(IBlockState state, World world, BlockPos pos, Block neighborBlock,
-				BlockPos fromPos) {
-			super.neighborChanged(state, world, pos, neighborBlock, fromPos);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
-			if (world.isBlockIndirectlyGettingPowered(new BlockPos(x, y, z)) > 0) {
+		public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ) {
+			super.onNeighborChange(world, x,y,z, tileX, tileY,tileZ);
+			
+			if (world.isBlockIndirectlyGettingPowered(x, y, z) > 0) {
 				<@procedureOBJToCode data.onRedstoneOn/>
 			} else {
 				<@procedureOBJToCode data.onRedstoneOff/>
@@ -625,14 +620,12 @@ package ${package}.block;
         </#if>
 
         <#if hasProcedure(data.onTickUpdate)>
-		@Override public void updateTick(World world, BlockPos pos, IBlockState state, Random random) {
-			super.updateTick(world, pos, state, random);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		@Override public void updateTick(World world, int x, int y, int z, Random random) {
+			super.updateTick(world, x,y,z, random);
+			
 			<@procedureOBJToCode data.onTickUpdate/>
 			<#if !data.tickRandomly>
-			world.scheduleUpdate(new BlockPos(x, y, z), this, this.tickRate(world));
+			world.scheduleUpdate(x, y, z, this, this.tickRate(world));
 			</#if>
 		}
         </#if>

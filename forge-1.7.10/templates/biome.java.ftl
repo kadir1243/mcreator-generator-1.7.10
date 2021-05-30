@@ -120,7 +120,7 @@ package ${package}.world.biome;
 					for (int px = position.getX() - k; px <= position.getX() + k && spawnTree; px++) {
 						for (int pz = position.getZ() - k; pz <= position.getZ() + k && spawnTree; pz++) {
 							if (j >= 0 && j < world.getHeight()) {
-								if (!this.isReplaceable(world, new BlockPos(px, j, pz))) {
+								if (!this.isReplaceable(world, px, j, pz)) {
 									spawnTree = false;
 								}
 							} else {
@@ -157,8 +157,8 @@ package ${package}.world.biome;
 										BlockPos blockpos = new BlockPos(k1, genh, i2);
 										state = world.getBlock(blockpos);
 
-										if (state.isAir(state, world, blockpos) || state
-												.isLeaves(state, world, blockpos)
+										if (state.isAir(state, world, blockpos) 
+												|| state.isLeaves(state, world, blockpos)
 												|| state == ${data.treeVines}
 												|| state == ${data.treeBranch}) {
 											this.setBlockAndNotifyAdequately(world,
@@ -203,8 +203,8 @@ package ${package}.world.biome;
 									for (int genz = position.getZ() - k4; genz <= position.getZ() + k4; genz++) {
 										BlockPos bpos = new BlockPos(genx, genh, genz);
 
-										state = world.getBlock(bpos);
-										if (state.isLeaves(state, world, bpos)
+										state = world.getBlock(genx, genh, genz);
+										if (state.isLeaves(state, world, genx, genh, genz)
 												|| state == ${data.treeBranch}) {
 											BlockPos blockpos1 = bpos.south();
 											BlockPos blockpos2 = bpos.west();

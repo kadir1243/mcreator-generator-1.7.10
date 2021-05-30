@@ -34,6 +34,24 @@
     </#if>
 </#function>
 
+<#function mappedMCItemToItemStackCode mappedBlock>
+    <#if mappedBlock.toString().contains("/*@ItemStack*/")>
+        <#return mappedBlock?replace("/*@ItemStack*/", "")>
+    <#elseif mappedBlock.toString().startsWith("CUSTOM:")>
+        <#if !mappedBlock.toString().contains(".")>
+            <#return "new ItemStack("+ (mappedBlock.toString().replace("CUSTOM:", (generator.getRecipeElementType(mappedBlock.toString())
+             == "BLOCK")?then("Block", "Item"))) + ".block)">
+        <#else>
+            <#return "new ItemStack("+ (mappedBlock.toString().replace("CUSTOM:", (generator.getRecipeElementType(mappedBlock.toString())
+             == "BLOCK")?then("Block", "Item"))) + ")">
+        </#if>
+    <#elseif !mappedBlock.toString().contains("#")>
+        <#return "new ItemStack(" + mappedBlock.toString().split("#")[0] + ")">
+    <#else>
+        <#return "new ItemStack(" + mappedBlock.toString().split("#")[0] + ", " + mappedBlock.toString().split("#")[1] + ")">
+    </#if>
+</#function>
+
 <#function mappedMCItemToItem mappedBlock>
     <#return mappedMCItemToItemStackCode(mappedBlock, 1)+".getItem()">
 </#function>

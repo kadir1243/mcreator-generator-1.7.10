@@ -51,15 +51,15 @@ package ${package}.world.structure;
 					if(isNetherType) {
 						boolean notpassed = true;
 						while (height > 0) {
-							if (notpassed && world.isAirBlock(new BlockPos(i, height, k)))
+							if (notpassed && world.isAirBlock(i, height, k))
 								notpassed = false;
-							else if (!notpassed && !world.isAirBlock(new BlockPos(i, height, k)))
+							else if (!notpassed && !world.isAirBlock(i, height, k))
 								break;
 							height--;
 						}
 					} else {
 						while (height > 0) {
-							if (!world.isAirBlock(new BlockPos(i, height, k)))
+							if (!world.isAirBlock(i, height, k))
 								break;
 							height--;
 						}
@@ -68,18 +68,18 @@ package ${package}.world.structure;
 					if(isNetherType) {
 						boolean notpassed = true;
 						while (height > 0) {
-							if (notpassed &&(world.isAirBlock(new BlockPos(i, height, k)) ||
-									!world.getBlockState(new BlockPos(i, height, k)).getBlock().getMaterial(world.getBlockState(new BlockPos(i, height, k))).blocksMovement()))
+							if (notpassed &&(world.isAirBlock(i, height, k)) ||
+									!world.getBlock(i, height, k).getMaterial(world.getBlock(i, height, k)).blocksMovement()))
 								notpassed = false;
-							else if (!notpassed && !world.isAirBlock(new BlockPos(i, height, k))
-									&& world.getBlockState(new BlockPos(i, height, k)).getBlock().getMaterial(world.getBlockState(new BlockPos(i, height, k))).blocksMovement())
+							else if (!notpassed && !world.isAirBlock(i, height, k)
+									&& world.getBlock(i, height, k).getMaterial(world.getBlock(i, height, k)).blocksMovement())
 								break;
 							height--;
 						}
 					} else {
 							while (height > 0) {
-								if (!world.isAirBlock(new BlockPos(i, height, k))
-										&& world.getBlockState(new BlockPos(i, height, k)).getBlock().getMaterial(world.getBlockState(new BlockPos(i, height, k))).blocksMovement())
+								if (!world.isAirBlock(i, height, k)
+										&& world.getBlock(i, height, k).getMaterial(world.getBlock(i, height, k)).blocksMovement())
 									break;
 								height--;
 							}
@@ -95,11 +95,11 @@ package ${package}.world.structure;
 		</#if>
 
 		<#if data.restrictionBlocks?has_content>
-			IBlockState blockAt = world.getBlockState(new BlockPos(i, j + 1, k));
+			IBlockState blockAt = world.getBlock(i, j + 1, k);
 			boolean blockCriteria = false;
 			IBlockState require;
 			<#list data.restrictionBlocks as restrictionBlock>
-					require = ${mappedBlockToBlockStateCode(restrictionBlock)};
+					require = ${restrictionBlock};
 				<#if hasMetadata(restrictionBlock)>try {
 					if ((blockAt.getBlock() == require.getBlock()) && (blockAt.getBlock().getMetaFromState(blockAt)
 						== require.getBlock().getMetaFromState(require)))
@@ -117,7 +117,7 @@ package ${package}.world.structure;
 
 		<#if data.restrictionBiomes?has_content>
 			boolean biomeCriteria = false;
-			Biome biome = world.getBiome(new BlockPos(i, j, k));
+			Biome biome = world.getBiome(i, j, k);
 			<#list data.restrictionBiomes as restrictionBiome>
 				<#if restrictionBiome.canProperlyMap()>
 				if (Biome.REGISTRY.getNameForObject(biome).equals(new ResourceLocation("${restrictionBiome}")))
@@ -143,10 +143,9 @@ package ${package}.world.structure;
 				Mirror mirror = Mirror.NONE;
 			</#if>
 
-			BlockPos spawnTo = new BlockPos(i, j + ${data.spawnHeightOffset}, k);
-			IBlockState iblockstate = world.getBlockState(spawnTo);
-			world.notifyBlockUpdate(spawnTo, iblockstate, iblockstate, 3);
-			template.addBlocksToWorldChunk(world, spawnTo,new PlacementSettings().setRotation(rotation).setMirror(mirror).setChunk((ChunkPos)null).setReplacedBlock((Block) null).setIgnoreStructureBlock(false).setIgnoreEntities(false));
+			IBlockState iblockstate = world.getBlock(i, j + ${data.spawnHeightOffset}, k);
+			world.notifyBlockUpdate(i, j + ${data.spawnHeightOffset}, k, iblockstate, iblockstate, 3);
+			template.addBlocksToWorldChunk(world, i, j + ${data.spawnHeightOffset}, k,new PlacementSettings().setRotation(rotation).setMirror(mirror).setChunk((ChunkPos)null).setReplacedBlock((Block) null).setIgnoreStructureBlock(false).setIgnoreEntities(false));
 
 			<#if hasProcedure(data.onStructureGenerated)>
 					int x = spawnTo.getX();

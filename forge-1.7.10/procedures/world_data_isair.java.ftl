@@ -1,1 +1,1 @@
-(world.isAirBlock(new BlockPos((int)${input$x},(int)${input$y},(int)${input$z})))
+(world.isAirBlock(${input$x},${input$y},${input$z}))

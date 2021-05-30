@@ -77,7 +77,7 @@ package ${package}.block;
 
 		<#if data.restrictionBiomes?has_content>
 			boolean biomeCriteria = false;
-			Biome biome=world.getBiome(new BlockPos(chunkX,128,chunkZ));
+			Biome biome=world.getBiome(chunkX,128,chunkZ);
     	    <#list data.restrictionBiomes as restrictionBiome>
 				<#if restrictionBiome.canProperlyMap()>
 				if(Biome.REGISTRY.getNameForObject(biome).equals(new ResourceLocation("${restrictionBiome}")))
@@ -113,7 +113,7 @@ package ${package}.block;
     		        </#list>
 					return blockCriteria;
 				}
-			})).generate(world,random,new BlockPos(x,y,z));
+			})).generate(world,random,x,y,z));
 		}
 	}
 	</#if>
@@ -462,7 +462,7 @@ package ${package}.block;
         </#if>
 
 		<#if data.enchantPowerBonus != 0>
-		@Override public float getEnchantPowerBonus(World world, BlockPos pos) {
+		@Override public float getEnchantPowerBonus(World world, int x,int y,int z) {
 			return ${data.enchantPowerBonus}f;
 		}
         </#if>
@@ -529,15 +529,14 @@ package ${package}.block;
 
         <#if data.plantsGrowOn>
         @Override
-		public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction,
-				net.minecraftforge.common.IPlantable plantable) {
+		public boolean canSustainPlant(IBlockAccess world, int x, int y, int z, ForgeDirection direction,net.minecraftforge.common.IPlantable plantable) {
 			return true;
 		}
         </#if>
 
         <#if data.canProvidePower>
         @Override
-		public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {
+		public boolean canConnectRedstone(IBlockAccess world, int x, int y, int z, int side) {
 			return true;
 		}
         </#if>
@@ -640,12 +639,10 @@ package ${package}.block;
 
         <#if hasProcedure(data.onRandomUpdateEvent) || data.spawnParticles>
 		@SideOnly(Side.CLIENT) @Override
-		public void randomDisplayTick(IBlockState state, World world, BlockPos pos, Random random) {
-			super.randomDisplayTick(state, world, pos, random);
+		public void randomDisplayTick(World world, int x, int y, int z, Random random) {
+			super.randomDisplayTick(world, x,y,z, random);
 			EntityPlayer entity = Minecraft.getMinecraft().player;
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+
 			<#if data.spawnParticles>
                 int i = x;
                 int j = y;
@@ -659,77 +656,59 @@ package ${package}.block;
 
         <#if hasProcedure(data.onDestroyedByPlayer)>
 		@Override
-		public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer entity,
-				boolean willHarvest) {
-			boolean retval = super.removedByPlayer(state, world, pos, entity, willHarvest);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		public boolean removedByPlayer(World world, EntityPlayer entity, int x, int y, int z,boolean willHarvest) {
+			boolean retval = super.removedByPlayer(world, entity, x,y,z, willHarvest);
+
 			<@procedureOBJToCode data.onDestroyedByPlayer/>
 			return retval;
 		}
         </#if>
 
         <#if hasProcedure(data.onDestroyedByExplosion)>
-		@Override public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion e) {
+		@Override public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion e) {
 			super.onBlockDestroyedByExplosion(world, pos, e);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+
 			<@procedureOBJToCode data.onDestroyedByExplosion/>
 		}
         </#if>
 
         <#if hasProcedure(data.onStartToDestroy)>
-		@Override public void onBlockClicked(World world, BlockPos pos, EntityPlayer entity) {
-			super.onBlockClicked(world, pos, entity);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		@Override public void onBlockClicked(World world, int x, int y, int z, EntityPlayer entity) {
+			super.onBlockClicked(world, x,y,z, entity);
+
 			<@procedureOBJToCode data.onStartToDestroy/>
 		}
         </#if>
 
         <#if hasProcedure(data.onEntityCollides)>
-		@Override public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
-			super.onEntityCollidedWithBlock(world, pos, state, entity);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		@Override public void onEntityCollidedWithBlock(World world, int x, int y, int z, Entity entity) {
+			super.onEntityCollidedWithBlock(world, x,y,z, state, entity);
+			
 			<@procedureOBJToCode data.onEntityCollides/>
 		}
         </#if>
 
 		<#if hasProcedure(data.onEntityWalksOn)>
-		@Override public void onEntityWalk(World world, BlockPos pos, Entity entity) {
-			super.onEntityWalk(world, pos, entity);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		@Override public void onEntityWalking(World world, int x, int y, int z, Entity entity) {
+			super.onEntityWalking(world, x,y,z, entity);
+			
 			<@procedureOBJToCode data.onEntityWalksOn/>
 		}
         </#if>
 
         <#if hasProcedure(data.onBlockPlayedBy)>
 		@Override
-		public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase entity,
-				ItemStack itemstack) {
-			super.onBlockPlacedBy(world, pos, state, entity, itemstack);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity,ItemStack itemstack) {
+			super.onBlockPlacedBy(world, x,y,z, entity, itemstack);
+			
 			<@procedureOBJToCode data.onBlockPlayedBy/>
 		}
         </#if>
 
         <#if hasProcedure(data.onRightClicked) || data.openGUIOnRightClick>
 		@Override
-		public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer entity,
-				EnumHand hand, EnumFacing direction, float hitX, float hitY, float hitZ) {
-			super.onBlockActivated(world, pos, state, entity, hand, direction, hitX, hitY, hitZ);
-			int x = pos.getX();
-			int y = pos.getY();
-			int z = pos.getZ();
+		public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer entity, int direction, float hitX, float hitY, float hitZ) {
+			super.onBlockActivated(world,x,y,z, entity, direction, hitX, hitY, hitZ);
 
 			<#if data.guiBoundTo?has_content && data.guiBoundTo != "<NONE>" && data.openGUIOnRightClick && (data.guiBoundTo)?has_content>
 				if(entity instanceof EntityPlayer) {

@@ -18,11 +18,11 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 	public final List<Supplier<Entity>> entities = new ArrayList();
 	public final List<Supplier<Potion>> potions = new ArrayList();
 
-	public static Map<ResourceLocation, net.minecraft.util.SoundEvent> sounds = new HashMap();
+	public static Map<ResourceLocation, net.minecraftforge.client.event.sound.SoundEvent> sounds = new HashMap();
 
 	public Elements${JavaModName}() {
 		<#list sounds as sound>
-		sounds.put(new ResourceLocation("${modid}" ,"${sound}"), new net.minecraft.util.SoundEvent(new ResourceLocation("${modid}" ,"${sound}")));
+		sounds.put(new ResourceLocation("${modid}" ,"${sound}"), new net.minecraftforge.client.event.sound.SoundEvent(new ResourceLocation("${modid}" ,"${sound}")));
 		</#list>
 	}
 
@@ -43,8 +43,8 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 		this.addNetworkMessage(${JavaModName}Variables.WorldSavedDataSyncMessageHandler.class, ${JavaModName}Variables.WorldSavedDataSyncMessage.class, Side.SERVER, Side.CLIENT);
 	}
 
-	public void registerSounds(RegistryEvent.Register<net.minecraft.util.SoundEvent> event) {
-		for (Map.Entry<ResourceLocation, net.minecraft.util.SoundEvent> sound : sounds.entrySet())
+	public void registerSounds(SoundEvent event) {
+		for (Map.Entry<ResourceLocation, net.minecraftforge.client.event.sound.SoundEvent> sound : sounds.entrySet())
 			event.getRegistry().register(sound.getValue().setRegistryName(sound.getKey()));
 	}
 

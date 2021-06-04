@@ -15,7 +15,7 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 	public final List<Supplier<Block>> blocks = new ArrayList();
 	public final List<Supplier<Item>> items = new ArrayList();
 	public final List<Supplier<BiomeGenBase>> biomes = new ArrayList();
-	public final List<Supplier<EntityEntry>> entities = new ArrayList();
+	public final List<Supplier<Entity>> entities = new ArrayList();
 	public final List<Supplier<Potion>> potions = new ArrayList();
 
 	public static Map<ResourceLocation, net.minecraft.util.SoundEvent> sounds = new HashMap();
@@ -123,7 +123,7 @@ public class Elements${JavaModName} implements IFuelHandler, IWorldGenerator {
 		return biomes;
 	}
 
-	public List<Supplier<EntityEntry>> getEntities() {
+	public List<Supplier<Entity>> getEntities() {
 		return entities;
 	}
 

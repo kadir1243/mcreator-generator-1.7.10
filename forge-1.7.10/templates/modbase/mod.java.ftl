@@ -70,8 +70,8 @@ package ${package};
 		event.getRegistry().registerAll(elements.getBiomes().stream().map(Supplier::get).toArray(BiomeGenBase[]::new));
 	}
 
-	@SubscribeEvent public void registerEntities(RegistryEvent.Register<EntityEntry> event) {
-		event.getRegistry().registerAll(elements.getEntities().stream().map(Supplier::get).toArray(EntityEntry[]::new));
+	@SubscribeEvent public void registerEntities(RegistryEvent.Register<Entity> event) {
+		event.getRegistry().registerAll(elements.getEntities().stream().map(Supplier::get).toArray(Entity[]::new));
 	}
 
 	@SubscribeEvent public void registerPotions(RegistryEvent.Register<Potion> event) {

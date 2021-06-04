@@ -7,7 +7,7 @@ public class ClientProxy${JavaModName} implements IProxy${JavaModName} {
 	}
 
 	@Override public void preInit(FMLPreInitializationEvent event) {
-		OBJLoader.INSTANCE.addDomain("${modid}");
+		new ObjModelLoader().loadInstance(new ResourceLocation("${modid}"));
 	}
 
 	@Override public void postInit(FMLPostInitializationEvent event) {

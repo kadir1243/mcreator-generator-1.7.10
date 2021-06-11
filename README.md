@@ -10,3 +10,5 @@ starting build
 # How to make this project faster
 
 if you know java please create pull request
+
+# This generator based to [1.12.2 mcreator generator](https://github.com/MCreator/Generator-Forge-1.12.2)
